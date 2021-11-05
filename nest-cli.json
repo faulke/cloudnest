@@ -1,0 +1,75 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/api/src",
+  "monorepo": true,
+  "root": "apps/api",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/api/tsconfig.app.json"
+  },
+  "projects": {
+    "api": {
+      "type": "application",
+      "root": "apps/api",
+      "entryFile": "main",
+      "sourceRoot": "apps/api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api/tsconfig.app.json"
+      }
+    },
+    "micro": {
+      "type": "application",
+      "root": "apps/micro",
+      "entryFile": "main",
+      "sourceRoot": "apps/micro/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/micro/tsconfig.app.json"
+      }
+    },
+    "shared": {
+      "type": "library",
+      "root": "libs/shared",
+      "entryFile": "index",
+      "sourceRoot": "libs/shared/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/shared/tsconfig.lib.json"
+      }
+    },
+    "interfaces": {
+      "type": "library",
+      "root": "libs/interfaces",
+      "entryFile": "index",
+      "sourceRoot": "libs/interfaces/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/interfaces/tsconfig.lib.json"
+      }
+    },
+    "back": {
+      "type": "library",
+      "root": "libs/back",
+      "entryFile": "index",
+      "sourceRoot": "libs/back/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/back/tsconfig.lib.json"
+      }
+    },
+    "front": {
+      "type": "library",
+      "root": "libs/front",
+      "entryFile": "index",
+      "sourceRoot": "libs/front/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/front/tsconfig.lib.json"
+      }
+    },
+    "dto": {
+      "type": "library",
+      "root": "libs/dto",
+      "entryFile": "index",
+      "sourceRoot": "libs/dto/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/dto/tsconfig.lib.json"
+      }
+    }
+  }
+}
