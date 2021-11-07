@@ -4,6 +4,7 @@
 
 .vscode
 .env
+data
 
 # Logs
 logs

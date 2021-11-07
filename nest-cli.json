@@ -17,24 +17,6 @@
         "tsConfigPath": "apps/api/tsconfig.app.json"
       }
     },
-    "micro": {
-      "type": "application",
-      "root": "apps/micro",
-      "entryFile": "main",
-      "sourceRoot": "apps/micro/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/micro/tsconfig.app.json"
-      }
-    },
-    "shared": {
-      "type": "library",
-      "root": "libs/shared",
-      "entryFile": "index",
-      "sourceRoot": "libs/shared/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/shared/tsconfig.lib.json"
-      }
-    },
     "interfaces": {
       "type": "library",
       "root": "libs/interfaces",
@@ -69,6 +51,15 @@
       "sourceRoot": "libs/dto/src",
       "compilerOptions": {
         "tsConfigPath": "libs/dto/tsconfig.lib.json"
+      }
+    },
+    "transactions": {
+      "type": "application",
+      "root": "apps/transactions",
+      "entryFile": "main",
+      "sourceRoot": "apps/transactions/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/transactions/tsconfig.app.json"
       }
     }
   }

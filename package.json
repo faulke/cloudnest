@@ -76,7 +76,6 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@lib/shared(|/.*)$": "<rootDir>/libs/shared/src/$1",
       "^@lib/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1",
       "^@lib/back(|/.*)$": "<rootDir>/libs/back/src/$1",
       "^@lib/front(|/.*)$": "<rootDir>/libs/front/src/$1",
