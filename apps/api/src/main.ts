@@ -3,6 +3,7 @@ import { AppModule } from './app.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  app.enableCors({ origin: '*' })
   const port = process.env.API_PORT
   console.log('Starting API on port:', port)
   await app.listen(port)
