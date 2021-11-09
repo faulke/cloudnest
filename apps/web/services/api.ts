@@ -1,15 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Test } from '@lib/interfaces'
 
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.40.192:6060/' }),
   endpoints: (builder) => ({
-    getTest: builder.query<Test, void>({
+    getTest: builder.query<any, void>({
       query: () => '/',
-      transformResponse: (response: { data: Test }) => response.data
+      transformResponse: (response: { data }) => response.data
+    }),
+    getLinkToken: builder.query<any, void>({
+      query: () => '/plaid/link-token',
+      transformResponse: (response: { data }) => response.data
     })
   })
 })
 
-export const { useGetTestQuery } = api
+export const { useGetTestQuery, useGetLinkTokenQuery } = api

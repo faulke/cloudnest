@@ -11,4 +11,11 @@ export class UsersController {
       data: await this.usersService.findAll()
     }
   }
+
+  @Get('/create')
+  async createUser() {
+    return {
+      data: await this.usersService.create()
+    }
+  }
 }

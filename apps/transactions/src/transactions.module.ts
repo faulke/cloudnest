@@ -6,6 +6,6 @@ import { TransactionsService } from './transactions.service'
 @Module({
   imports: [ConfigModule.forRoot()],
   controllers: [TransactionsController],
-  providers: [TransactionsService],
+  providers: [TransactionsService]
 })
 export class TransactionsModule {}

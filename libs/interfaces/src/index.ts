@@ -1,4 +1,5 @@
 export class User {
   id: string
-  email: string
+  email?: string
+  isActive?: boolean
 }

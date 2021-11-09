@@ -24,23 +24,17 @@
       "@lib/interfaces/*": [
         "libs/interfaces/src/*"
       ],
-      "@lib/back": [
-        "libs/back/src"
-      ],
-      "@lib/back/*": [
-        "libs/back/src/*"
-      ],
-      "@lib/front": [
-        "libs/front/src"
-      ],
-      "@lib/front/*": [
-        "libs/front/src/*"
-      ],
       "@lib/dto": [
         "libs/dto/src"
       ],
       "@lib/dto/*": [
         "libs/dto/src/*"
+      ],
+      "@lib/items": [
+        "libs/items/src"
+      ],
+      "@lib/items/*": [
+        "libs/items/src/*"
       ]
     }
   }

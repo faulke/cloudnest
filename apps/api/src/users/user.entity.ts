@@ -2,18 +2,22 @@ import { EntitySchema } from 'typeorm'
 import { User } from '@lib/interfaces'
 
 const UserSchema = new EntitySchema<User>({
-  name: 'User',
+  name: 'user',
   tableName: 'users',
-  target: User,
   columns: {
     id: {
       type: 'uuid',
       primary: true,
-      generated: true
+      generated: 'uuid'
     },
     email: {
       type: String,
       unique: true
+    },
+    isActive: {
+      type: Boolean,
+      name: 'is_active',
+      default: true
     }
   }
 })

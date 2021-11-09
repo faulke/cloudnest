@@ -14,4 +14,8 @@ export class UsersService {
   findAll(): Promise<User[]> {
     return this.usersRepository.find()
   }
+
+  async create(): Promise<User> {
+    return this.usersRepository.save({ email: 'test2@email.com' })
+  }
 }
