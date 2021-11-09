@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common'
-import { Test } from '@lib/interfaces'
+import { User } from '@lib/interfaces'
 
 @Injectable()
 export class AppService {
-  getHello(): Test {
-    return { field: 'Hello world!' }
+  getHello(): User {
+    return { id: '12346', email: 'test@email.com' }
   }
 }

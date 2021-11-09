@@ -1,3 +1,4 @@
-export interface Test {
-  field: string
+export class User {
+  id: string
+  email: string
 }
