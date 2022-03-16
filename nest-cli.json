@@ -52,6 +52,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/items/tsconfig.lib.json"
       }
+    },
+    "ravendb": {
+      "type": "library",
+      "root": "libs/ravendb",
+      "entryFile": "index",
+      "sourceRoot": "libs/ravendb/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/ravendb/tsconfig.lib.json"
+      }
     }
   }
 }

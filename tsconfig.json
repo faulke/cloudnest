@@ -35,6 +35,12 @@
       ],
       "@lib/items/*": [
         "libs/items/src/*"
+      ],
+      "@lib/ravendb": [
+        "libs/ravendb/src"
+      ],
+      "@lib/ravendb/*": [
+        "libs/ravendb/src/*"
       ]
     }
   }

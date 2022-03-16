@@ -1,4 +1,4 @@
-import { Controller, Get, Inject } from '@nestjs/common'
+import { Controller, Get, Post, Body, Inject } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { ItemsService } from '@lib/items'
 
@@ -20,7 +20,7 @@ export class ItemsController {
   async createItem() {
     return {
       data: await this.itemsService.create({
-        id: 'test_id4',
+        itemId: 'test_id4',
         token: 'test_token',
         userId: '589a682e-47a8-4bfb-aeb6-cb3e9954dea1'
       })
@@ -29,8 +29,18 @@ export class ItemsController {
 
   @Get('/micro')
   sendMessage() {
-    const pattern = { cmd: 'sum' }
-    const payload = [1, 2, 3]
-    return this.client.send<number>(pattern, payload)
+    const pattern = { cmd: 'get_transactions' }
+    const payload = {
+      userId: '589a682e-47a8-4bfb-aeb6-cb3e9954dea1',
+      itemId: 'test_item_id'
+    }
+    return this.client.send<Promise<any>>(pattern, payload)
+  }
+
+  @Post('/hooks')
+  async handleWebhook(@Body() payload: any) {
+    // drop in queue to be processed by transactions worker
+    console.log(payload)
+    return '200'
   }
 }

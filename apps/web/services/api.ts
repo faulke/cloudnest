@@ -8,11 +8,34 @@ export const api = createApi({
       query: () => '/',
       transformResponse: (response: { data }) => response.data
     }),
-    getLinkToken: builder.query<any, void>({
-      query: () => '/plaid/link-token',
+    getLinkToken: builder.mutation<any, string>({
+      query: (userId: string) => ({
+        url: '/plaid/link-token',
+        method: 'POST',
+        body: { userId }
+      }),
       transformResponse: (response: { data }) => response.data
+    }),
+    exchangeToken: builder.mutation<any, { token: string; userId: string }>({
+      query: ({ token, userId }) => ({
+        url: '/plaid/exchange-token',
+        method: 'POST',
+        body: { token, userId }
+      }),
+      transformResponse: (response: { data }) => response.data
+    }),
+    fireWebhook: builder.mutation<any, any>({
+      query: () => ({
+        url: '/plaid/hooks/test',
+        method: 'POST'
+      })
     })
   })
 })
 
-export const { useGetTestQuery, useGetLinkTokenQuery } = api
+export const {
+  useGetTestQuery,
+  useGetLinkTokenMutation,
+  useExchangeTokenMutation,
+  useFireWebhookMutation
+} = api

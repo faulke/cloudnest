@@ -1,27 +1,32 @@
 import { useCallback, FC } from 'react'
 import type { NextPage } from 'next'
 import { usePlaidLink } from 'react-plaid-link'
-import { useGetLinkTokenQuery } from '../services/api'
+import {
+  useGetLinkTokenMutation,
+  useExchangeTokenMutation,
+  useFireWebhookMutation
+} from '../services/api'
 
-// const Home: NextPage = () => {
-//   const { data, error, isLoading } = useGetTestQuery()
-
-//   return (
-//     <div className={styles.container}>
-//       <div>Response</div>
-//       <div>{JSON.stringify(data)}</div>
-//     </div>
-//   )
-// }
-
-// APP COMPONENT
-// Upon rendering of App component, make a request to create and
-// obtain a link token to be used in the Link component
+const userId = '31bb4aee-09d2-4ffe-a39f-3c05f5856962'
 
 const App: NextPage = () => {
-  const { data, error } = useGetLinkTokenQuery()
+  const [getToken, { data = {} }] = useGetLinkTokenMutation()
+  const [fireWebhook] = useFireWebhookMutation()
+  const { linkToken } = data
 
-  return data ? <Link linkToken={data.link_token} /> : null
+  if (linkToken) {
+    return <Link linkToken={linkToken} />
+  }
+
+  return (
+    <div>
+      <div>Get token for user: {userId}</div>
+      <button type='button' onClick={() => getToken(userId)}>
+        Get Token
+      </button>
+      <button onClick={fireWebhook}>Fire webhook</button>
+    </div>
+  )
 }
 // LINK COMPONENT
 // Use Plaid Link and pass link token and onSuccess function
@@ -29,9 +34,13 @@ const App: NextPage = () => {
 interface LinkProps {
   linkToken: string | null
 }
+
 const Link: FC<LinkProps> = (props: LinkProps) => {
-  const onSuccess = useCallback((public_token) => {
-    // Handle response ...
+  const [exchangeToken, { data }] = useExchangeTokenMutation()
+  console.log(data)
+
+  const onSuccess = useCallback((publicToken) => {
+    exchangeToken({ token: publicToken, userId })
   }, [])
   const config: Parameters<typeof usePlaidLink>[0] = {
     token: props.linkToken,
@@ -39,9 +48,11 @@ const Link: FC<LinkProps> = (props: LinkProps) => {
   }
   const { open, ready } = usePlaidLink(config)
   return (
-    <button onClick={() => open()} disabled={!ready}>
-      Link account
-    </button>
+    <div>
+      <button onClick={() => open()} disabled={!ready}>
+        Link account
+      </button>
+    </div>
   )
 }
 export default App

@@ -32,10 +32,12 @@
     "@nestjs/typeorm": "^8.0.2",
     "pg": "^8.7.1",
     "plaid": "^9.6.0",
+    "ravendb": "^5.2.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.2.38"
+    "typeorm": "^0.2.38",
+    "typeorm-naming-strategies": "^4.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -85,7 +87,8 @@
       "^@lib/back(|/.*)$": "<rootDir>/libs/back/src/$1",
       "^@lib/front(|/.*)$": "<rootDir>/libs/front/src/$1",
       "^@lib/dto(|/.*)$": "<rootDir>/libs/dto/src/$1",
-      "^@lib/items(|/.*)$": "<rootDir>/libs/items/src/$1"
+      "^@lib/items(|/.*)$": "<rootDir>/libs/items/src/$1",
+      "^@lib/ravendb(|/.*)$": "<rootDir>/libs/ravendb/src/$1"
     }
   }
 }

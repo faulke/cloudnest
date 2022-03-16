@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common'
-import { TypeOrmModule } from '@nestjs/typeorm'
 import { ClientsModule, Transport } from '@nestjs/microservices'
-import { ItemsService, ItemSchema, ItemSubscriber } from '@lib/items'
+import { ItemsModule as ItemsLib } from '@lib/items'
 import { ItemsController } from './items.controller'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ItemSchema]),
     ClientsModule.register([
       {
         name: 'MATH_SERVICE',
@@ -15,9 +13,9 @@ import { ItemsController } from './items.controller'
           host: 'transactions'
         }
       }
-    ])
+    ]),
+    ItemsLib
   ],
-  controllers: [ItemsController],
-  providers: [ItemsService, ItemSubscriber]
+  controllers: [ItemsController]
 })
 export class ItemsModule {}

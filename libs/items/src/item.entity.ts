@@ -6,13 +6,29 @@ export const ItemSchema = new EntitySchema<Item>({
   tableName: 'items',
   columns: {
     id: {
-      type: String,
+      type: 'uuid',
       primary: true,
-      nullable: false
+      generated: 'uuid'
+    },
+    itemId: {
+      type: String,
+      nullable: false,
+      unique: true,
+      name: 'item_id'
     },
     token: {
       type: String,
       nullable: false
+    },
+    initReady: {
+      type: Boolean,
+      name: 'init_ready',
+      default: false
+    },
+    historicalReady: {
+      type: Boolean,
+      name: 'historical_ready',
+      default: false
     },
     userId: {
       type: 'uuid',

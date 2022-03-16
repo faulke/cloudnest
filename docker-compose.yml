@@ -58,9 +58,9 @@ services:
       # - RAVEN_ServerUrl=http://0.0.0.0:8080
       # - RAVEN_ServerUrl_Tcp=tcp://0.0.0.0:38888
     ports:
-      - ${RAVEN_PORT}:8080
+      - ${RAVEN_UI_PORT}:${RAVEN_PORT}
       - ${RAVEN_TCP_PORT}:38888/tcp
     expose:
-      - ${RAVEN_PORT}
+      - ${RAVEN_UI_PORT}
     volumes:
       - ./data/raven:/opt/RavenDB/Server/RavenData
