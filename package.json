@@ -88,7 +88,8 @@
       "^@lib/front(|/.*)$": "<rootDir>/libs/front/src/$1",
       "^@lib/dto(|/.*)$": "<rootDir>/libs/dto/src/$1",
       "^@lib/items(|/.*)$": "<rootDir>/libs/items/src/$1",
-      "^@lib/ravendb(|/.*)$": "<rootDir>/libs/ravendb/src/$1"
+      "^@lib/ravendb(|/.*)$": "<rootDir>/libs/ravendb/src/$1",
+      "^@lib/plaid(|/.*)$": "<rootDir>/libs/plaid/src/$1"
     }
   }
 }

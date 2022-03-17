@@ -7,7 +7,7 @@ import {
   useFireWebhookMutation
 } from '../services/api'
 
-const userId = '31bb4aee-09d2-4ffe-a39f-3c05f5856962'
+const userId = 'cf8eeabd-b77e-4547-b604-e1075404dc23'
 
 const App: NextPage = () => {
   const [getToken, { data = {} }] = useGetLinkTokenMutation()
@@ -24,7 +24,7 @@ const App: NextPage = () => {
       <button type='button' onClick={() => getToken(userId)}>
         Get Token
       </button>
-      <button onClick={fireWebhook}>Fire webhook</button>
+      <button onClick={() => fireWebhook()}>Fire webhook</button>
     </div>
   )
 }

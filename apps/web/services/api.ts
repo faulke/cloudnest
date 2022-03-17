@@ -24,7 +24,7 @@ export const api = createApi({
       }),
       transformResponse: (response: { data }) => response.data
     }),
-    fireWebhook: builder.mutation<any, any>({
+    fireWebhook: builder.mutation<any, void>({
       query: () => ({
         url: '/plaid/hooks/test',
         method: 'POST'

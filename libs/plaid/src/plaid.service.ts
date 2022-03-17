@@ -7,7 +7,8 @@ import {
   Products,
   CountryCode,
   SandboxItemFireWebhookRequest,
-  SandboxItemFireWebhookRequestWebhookCodeEnum as WebhookCode
+  SandboxItemFireWebhookRequestWebhookCodeEnum as WebhookCode,
+  TransactionsGetRequest
 } from 'plaid'
 
 @Injectable()
@@ -35,9 +36,9 @@ export class PlaidService {
         client_user_id: userId
       },
       client_name: 'Plaid Test App',
-      products: [Products.Auth, Products.Transactions, Products.Liabilities],
+      products: [Products.Auth, Products.Transactions],
       language: 'en',
-      webhook: 'https://23c6-96-18-155-229.ngrok.io/items/hooks',
+      webhook: 'https://0152-96-18-155-229.ngrok.io/items/hooks',
       country_codes: [CountryCode.Us]
     }
 
@@ -75,5 +76,15 @@ export class PlaidService {
       console.log(error)
       return null
     }
+  }
+
+  async getTransactions(token: string) {
+    const req: TransactionsGetRequest = {
+      access_token: token,
+      start_date: '2021-03-15',
+      end_date: '2022-03-15'
+    }
+    const res = await this.client.transactionsGet(req)
+    return res.data
   }
 }

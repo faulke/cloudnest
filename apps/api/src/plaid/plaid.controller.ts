@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common'
-import { PlaidService } from './plaid.service'
-import { LinkTokenRequest, LinkTokenResponse } from './plaid.dto'
 import { ItemsService } from '@lib/items'
+import { PlaidService } from '@lib/plaid'
+import { LinkTokenRequest, LinkTokenResponse } from './plaid.dto'
 
 @Controller('plaid')
 export class PlaidController {
@@ -43,7 +43,7 @@ export class PlaidController {
   @Post('/hooks/test')
   async testWebhook() {
     return await this.plaidService.fireWebhook(
-      'access-sandbox-5fe59bac-355d-4787-94ec-f4052d8bd7cb'
+      'access-sandbox-c7583fa1-3870-4d2c-a65b-94733dca22cd'
     )
   }
 }

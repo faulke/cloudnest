@@ -15,6 +15,10 @@ export class ItemsService {
     return this.itemsRepository.find()
   }
 
+  findByPlaidId(itemId: string): Promise<Item> {
+    return this.itemsRepository.findOne({ where: { itemId } })
+  }
+
   create(item: Item): Promise<Item> {
     return this.itemsRepository.save(item)
   }

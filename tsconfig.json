@@ -41,6 +41,12 @@
       ],
       "@lib/ravendb/*": [
         "libs/ravendb/src/*"
+      ],
+      "@lib/plaid": [
+        "libs/plaid/src"
+      ],
+      "@lib/plaid/*": [
+        "libs/plaid/src/*"
       ]
     }
   }
