@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import Link from 'next/link'
 import { useAuth0 } from '@auth0/auth0-react'
 
 const App: NextPage = () => {
@@ -18,6 +19,7 @@ const App: NextPage = () => {
         <img src={user.picture} alt={user.name} />
         <h2>{user.name}</h2>
         <p>{user.email}</p>
+        <Link href='/plaid'>Go to Plaid</Link>
       </div>
     )
   )

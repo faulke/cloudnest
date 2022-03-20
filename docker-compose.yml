@@ -63,3 +63,18 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+  proxy:
+    container_name: proxy
+    image: nginx
+    logging:
+      driver: none
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./apps/proxy/config:/etc/nginx
+      - ./apps/proxy/certs:/etc/ssl/private
+    depends_on:
+      - api
+      - auth
+      - transactions
