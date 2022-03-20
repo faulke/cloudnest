@@ -1,58 +1,26 @@
-import { useCallback, FC } from 'react'
 import type { NextPage } from 'next'
-import { usePlaidLink } from 'react-plaid-link'
-import {
-  useGetLinkTokenMutation,
-  useExchangeTokenMutation,
-  useFireWebhookMutation
-} from '../services/api'
-
-const userId = 'cf8eeabd-b77e-4547-b604-e1075404dc23'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const App: NextPage = () => {
-  const [getToken, { data = {} }] = useGetLinkTokenMutation()
-  const [fireWebhook] = useFireWebhookMutation()
-  const { linkToken } = data
+  const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0()
 
-  if (linkToken) {
-    return <Link linkToken={linkToken} />
+  if (isLoading) {
+    return <div>Loading ...</div>
+  }
+
+  if (!isAuthenticated) {
+    return <button onClick={loginWithRedirect}>Login</button>
   }
 
   return (
-    <div>
-      <div>Get token for user: {userId}</div>
-      <button type='button' onClick={() => getToken(userId)}>
-        Get Token
-      </button>
-      <button onClick={() => fireWebhook()}>Fire webhook</button>
-    </div>
+    isAuthenticated && (
+      <div>
+        <img src={user.picture} alt={user.name} />
+        <h2>{user.name}</h2>
+        <p>{user.email}</p>
+      </div>
+    )
   )
 }
-// LINK COMPONENT
-// Use Plaid Link and pass link token and onSuccess function
-// in configuration to initialize Plaid Link
-interface LinkProps {
-  linkToken: string | null
-}
 
-const Link: FC<LinkProps> = (props: LinkProps) => {
-  const [exchangeToken, { data }] = useExchangeTokenMutation()
-  console.log(data)
-
-  const onSuccess = useCallback((publicToken) => {
-    exchangeToken({ token: publicToken, userId })
-  }, [])
-  const config: Parameters<typeof usePlaidLink>[0] = {
-    token: props.linkToken,
-    onSuccess
-  }
-  const { open, ready } = usePlaidLink(config)
-  return (
-    <div>
-      <button onClick={() => open()} disabled={!ready}>
-        Link account
-      </button>
-    </div>
-  )
-}
 export default App

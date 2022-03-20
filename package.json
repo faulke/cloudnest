@@ -30,6 +30,7 @@
     "@nestjs/microservices": "^8.2.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.2",
+    "axios": "^0.26.1",
     "pg": "^8.7.1",
     "plaid": "^9.6.0",
     "ravendb": "^5.2.1",
@@ -83,7 +84,7 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@lib/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1",
+      "^@lib/models(|/.*)$": "<rootDir>/libs/models/src/$1",
       "^@lib/back(|/.*)$": "<rootDir>/libs/back/src/$1",
       "^@lib/front(|/.*)$": "<rootDir>/libs/front/src/$1",
       "^@lib/dto(|/.*)$": "<rootDir>/libs/dto/src/$1",

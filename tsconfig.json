@@ -18,11 +18,11 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@lib/interfaces": [
-        "libs/interfaces/src"
+      "@lib/models": [
+        "libs/models/src"
       ],
-      "@lib/interfaces/*": [
-        "libs/interfaces/src/*"
+      "@lib/models/*": [
+        "libs/models/src/*"
       ],
       "@lib/dto": [
         "libs/dto/src"

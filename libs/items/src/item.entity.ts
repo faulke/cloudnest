@@ -1,5 +1,5 @@
 import { EntitySchema } from 'typeorm'
-import { Item } from './item.model'
+import { Item } from '@lib/models'
 
 export const ItemSchema = new EntitySchema<Item>({
   name: 'item',

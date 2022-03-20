@@ -1,6 +1,6 @@
-import { User } from '@lib/interfaces'
+import { User } from './user'
 
-export class Item {
+export interface Item {
   id?: string
   itemId: string
   token: string

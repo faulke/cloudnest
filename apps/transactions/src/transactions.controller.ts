@@ -13,15 +13,15 @@ export class TransactionsController {
   ) {}
 
   @Get()
-  getHello(): string {
-    return this.transactionsService.getHello()
+  async getTransactions() {
+    // getTransactions should be a regular api endpoint that fetches them from ravendb
   }
 
   // start with the event pattern for microservices
   // move to worker processing events from queue
-  // getTransactions should be a regular api endpoint that fetches them from ravendb
+
   @MessagePattern({ cmd: 'get_transactions' })
-  async getTransactions(token: string) {
+  async syncTransactions(token: string) {
     try {
       const txns = await this.plaid.getTransactions(token)
       console.log(txns.transactions.length)

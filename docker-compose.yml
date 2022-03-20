@@ -17,6 +17,22 @@ services:
       - .env
     depends_on:
       - db
+  auth:
+    container_name: cloudnest-auth
+    image: cloudnest-auth:1.0.0
+    build:
+      context: .
+      target: development
+    command: npm run start:debug auth
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - ${AUTH_PORT}:${AUTH_PORT}
+    env_file:
+      - .env
+    depends_on:
+      - db
   transactions:
     container_name: cloudnest-transactions
     image: cloudnest-transactions:1.0.0
@@ -29,7 +45,6 @@ services:
       - /usr/src/app/node_modules
     ports:
       - ${TRANSACTIONS_PORT}:${TRANSACTIONS_PORT}
-      - 3000:3000/tcp
     env_file:
       - .env
   db:
@@ -48,19 +63,3 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-  raven:
-    container_name: cloudnest-ravendb
-    image: ravendb/ravendb:latest-lts
-    environment:
-      - RAVEN_Setup_Mode=None
-      - RAVEN_Security_UnsecuredAccessAllowed=PrivateNetwork
-      - RAVEN_ARGS=--log-to-console
-      # - RAVEN_ServerUrl=http://0.0.0.0:8080
-      # - RAVEN_ServerUrl_Tcp=tcp://0.0.0.0:38888
-    ports:
-      - ${RAVEN_UI_PORT}:${RAVEN_PORT}
-      - ${RAVEN_TCP_PORT}:38888/tcp
-    expose:
-      - ${RAVEN_UI_PORT}
-    volumes:
-      - ./data/raven:/opt/RavenDB/Server/RavenData

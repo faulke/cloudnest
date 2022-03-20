@@ -48,6 +48,24 @@ export class ItemsController {
     console.log(payload)
     const item = await this.itemsService.findByPlaidId(itemId)
 
+    // create/update accounts
+    // create transactions
+    // remove transactions
+    // emit event
+
+    // transactions by account
+    // transactions by door
+
+    // transaction tags = [...ids]
+    // transaction account_id
+    // transaction door(s) = [...ids]
+
+    // single family = 1 door
+
+    // multi = [doors]
+
+    // one transaction for multiple doors? split?
+
     const obs = this.client.send<any>(pattern, item.token)
     const res = await lastValueFrom(obs)
     console.log(res)

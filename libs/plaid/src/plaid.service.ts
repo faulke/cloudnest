@@ -79,6 +79,13 @@ export class PlaidService {
   }
 
   async getTransactions(token: string) {
+    // dates should switch based on webhook type:
+    // INITIAL_UPDATE: today - 30 days
+    // HISTORICAL_UPDATE: 30 days - way back??
+    // DEFAULT_UPDATE: 30 days - 2 days?? (checked several times per day by plaid)
+    //
+    // will need to paginate. see example:
+    // https://plaid.com/docs/api/products/transactions/#transactionsget
     const req: TransactionsGetRequest = {
       access_token: token,
       start_date: '2021-03-15',

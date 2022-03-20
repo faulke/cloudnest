@@ -25,7 +25,7 @@ export class PlaidController {
   @Post('/exchange-token')
   async exchangeToken(@Body() request) {
     const res = await this.plaidService.exchangePublicToken(request.token)
-    console.log(request)
+    console.log(res)
     // create item in db
     const item = await this.itemsService.create({
       token: res.access_token,

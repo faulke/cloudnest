@@ -4,7 +4,7 @@ import {
   EventSubscriber,
   InsertEvent
 } from 'typeorm'
-import { Item } from './item.model'
+import { Item } from '@lib/models'
 
 @EventSubscriber()
 export class ItemSubscriber implements EntitySubscriberInterface<Item> {
