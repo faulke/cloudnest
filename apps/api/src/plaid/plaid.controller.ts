@@ -43,7 +43,7 @@ export class PlaidController {
   @Post('/hooks/test')
   async testWebhook() {
     return await this.plaidService.fireWebhook(
-      'access-sandbox-c7583fa1-3870-4d2c-a65b-94733dca22cd'
+      ''
     )
   }
 }
