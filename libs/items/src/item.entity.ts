@@ -33,6 +33,10 @@ export const ItemSchema = new EntitySchema<Item>({
     userId: {
       type: 'uuid',
       nullable: false
+    },
+    institutionId: {
+      type: String,
+      nullable: false
     }
   },
   relations: {

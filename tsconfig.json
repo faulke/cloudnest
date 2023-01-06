@@ -47,6 +47,12 @@
       ],
       "@lib/plaid/*": [
         "libs/plaid/src/*"
+      ],
+      "@lib/accounts": [
+        "libs/accounts/src"
+      ],
+      "@lib/accounts/*": [
+        "libs/accounts/src/*"
       ]
     }
   }
