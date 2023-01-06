@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common'
-import { MessagePattern } from '@nestjs/microservices'
+import { EventPattern } from '@nestjs/microservices'
 import { TransactionsService } from './transactions.service'
 import { RavendbService } from '@lib/ravendb'
 import { PlaidService } from '@lib/plaid'
@@ -20,14 +20,15 @@ export class TransactionsController {
   // start with the event pattern for microservices
   // move to worker processing events from queue
 
-  @MessagePattern({ cmd: 'get_transactions' })
+  @EventPattern('get_transactions')
   async syncTransactions(token: string) {
-    try {
-      const txns = await this.plaid.getTransactions(token)
-      console.log(txns.transactions.length)
-    } catch (error) {
-      console.log(error)
-    }
+    console.log(token)
+    // try {
+    //   const txns = await this.plaid.getTransactions(token)
+    //   console.log(txns.transactions.length)
+    // } catch (error) {
+    //   console.log(error)
+    // }
 
     return {}
   }

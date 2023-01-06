@@ -8,4 +8,5 @@ export interface Item {
   initReady?: boolean
   historicalReady?: boolean
   user?: User
+  institutionId: string
 }

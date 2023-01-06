@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const api = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.40.192:6060/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `http://${process.env.NEXT_PUBLIC_API_HOST}/api` }),
   endpoints: (builder) => ({
     getTest: builder.query<any, void>({
       query: () => '/',
@@ -16,11 +16,11 @@ export const api = createApi({
       }),
       transformResponse: (response: { data }) => response.data
     }),
-    exchangeToken: builder.mutation<any, { token: string; userId: string }>({
-      query: ({ token, userId }) => ({
+    exchangeToken: builder.mutation<any, { token: string; userId: string, institutionId: string }>({
+      query: ({ token, userId, institutionId }) => ({
         url: '/plaid/exchange-token',
         method: 'POST',
-        body: { token, userId }
+        body: { token, userId, institutionId }
       }),
       transformResponse: (response: { data }) => response.data
     }),

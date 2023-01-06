@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module'
 import { PlaidModule } from './plaid/plaid.module'
 import { ItemsModule } from './items/items.module'
 import { OrganizationsModule } from './organizations/organizations.module'
+import { AccountsModule } from './accounts/accounts.module'
 
 // entities
 import {
@@ -14,6 +15,7 @@ import {
   OrganizationUserSchema as OrganizationUser
 } from './users/user.entity'
 import { ItemSchema as Item } from '@lib/items'
+import { AccountSchema as Account } from '@lib/accounts'
 import Organization from './organizations/organization.entity'
 
 const ormConfig: TypeOrmModuleOptions = {
@@ -23,7 +25,7 @@ const ormConfig: TypeOrmModuleOptions = {
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  entities: [User, OrganizationUser, Item, Organization],
+  entities: [User, OrganizationUser, Item, Organization, Account],
   synchronize: true
   // namingStrategy: new SnakeNamingStrategy()
 }
@@ -35,7 +37,8 @@ const ormConfig: TypeOrmModuleOptions = {
     UsersModule,
     PlaidModule,
     ItemsModule,
-    OrganizationsModule
+    OrganizationsModule,
+    AccountsModule
   ],
   controllers: [AppController],
   providers: [AppService]

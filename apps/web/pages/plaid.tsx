@@ -1,4 +1,4 @@
-import { useCallback, FC } from 'react'
+import { useCallback, FC, useEffect } from 'react'
 import type { NextPage } from 'next'
 import { usePlaidLink } from 'react-plaid-link'
 import {
@@ -37,21 +37,28 @@ interface LinkProps {
 
 const Link: FC<LinkProps> = (props: LinkProps) => {
   const [exchangeToken, { data }] = useExchangeTokenMutation()
-  console.log(data)
 
-  const onSuccess = useCallback((publicToken) => {
-    exchangeToken({ token: publicToken, userId })
+  const onSuccess = useCallback((publicToken, metadata) => {
+    const { institution_id: institutionId } = metadata.institution
+    console.log(metadata) // get institutionId here
+    exchangeToken({ token: publicToken, userId, institutionId })
   }, [])
   const config: Parameters<typeof usePlaidLink>[0] = {
     token: props.linkToken,
-    onSuccess
+    onSuccess,
+    onEvent: (name, metadata) => console.log(name, metadata) // handle window closed by user
   }
   const { open, ready } = usePlaidLink(config)
+
+  useEffect(() => {
+    if (ready) {
+      open()
+    }
+  }, [open, ready])
+
   return (
     <div>
-      <button onClick={() => open()} disabled={!ready}>
-        Link account
-      </button>
+      Linking account
     </div>
   )
 }
