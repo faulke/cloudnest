@@ -53,6 +53,12 @@
       ],
       "@lib/accounts/*": [
         "libs/accounts/src/*"
+      ],
+      "@lib/clients": [
+        "libs/clients/src"
+      ],
+      "@lib/clients/*": [
+        "libs/clients/src/*"
       ]
     }
   }

@@ -33,7 +33,7 @@ const ormConfig: TypeOrmModuleOptions = {
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot(ormConfig),
     UsersModule,
     PlaidModule,

@@ -4,14 +4,18 @@ import { usePlaidLink } from 'react-plaid-link'
 import {
   useGetLinkTokenMutation,
   useExchangeTokenMutation,
-  useFireWebhookMutation
+  useFireWebhookMutation,
+  useGetItemsQuery,
+  useRemoveItemMutation
 } from '../services/api'
 
 const userId = 'cf8eeabd-b77e-4547-b604-e1075404dc23'
 
 const App: NextPage = () => {
   const [getToken, { data = {} }] = useGetLinkTokenMutation()
+  const { data: items = [], isLoading } = useGetItemsQuery()
   const [fireWebhook] = useFireWebhookMutation()
+  const [removeItem] = useRemoveItemMutation()
   const { linkToken } = data
 
   if (linkToken) {
@@ -21,10 +25,16 @@ const App: NextPage = () => {
   return (
     <div>
       <div>Get token for user: {userId}</div>
-      <button type='button' onClick={() => getToken(userId)}>
-        Get Token
+      <button type='button' onClick={() => getToken(userId)} style={{ marginBottom: '12px' }}>
+        Link New Item
       </button>
-      <button onClick={() => fireWebhook()}>Fire webhook</button>
+      {items.map((item) => (
+        <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', width: '700px', marginTop: '8px'}}>
+          <div>{item.itemId}</div>
+          <button type='button' onClick={() => fireWebhook(item.token)}>Fire webhook</button>
+          <button type='button' onClick={() => removeItem(item.id)}>Remove</button>
+        </div>
+      ))}
     </div>
   )
 }

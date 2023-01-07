@@ -16,7 +16,8 @@ export interface User {
 export interface OrganizationUser {
   id: string
   organization: Organization
-  user: User
+  user?: User
+  userId: string
   roles: Role[]
   isActive: boolean
 }

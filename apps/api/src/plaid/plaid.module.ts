@@ -1,12 +1,17 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
 import { PlaidModule as PlaidLib } from '@lib/plaid'
 import { ItemsModule as ItemsLib } from '@lib/items'
 import { AccountsModule as AccountsLib } from '@lib/accounts'
 import { PlaidController } from './plaid.controller'
+import { TransactionsClient } from '@lib/clients'
 
 @Module({
-  imports: [ConfigModule, ItemsLib, PlaidLib, AccountsLib],
+  imports: [
+    ItemsLib,
+    PlaidLib,
+    AccountsLib,
+    TransactionsClient
+  ],
   controllers: [PlaidController],
   providers: []
 })

@@ -36,6 +36,12 @@ export const ItemSchema = new EntitySchema<Item>({
       type: 'many-to-one',
       target: 'user',
       nullable: false
+    },
+    accounts: {
+      type: 'one-to-many',
+      target: 'account',
+      onDelete: 'CASCADE',
+      eager: true
     }
   }
 })

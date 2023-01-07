@@ -8,7 +8,7 @@ async function bootstrap() {
   app.connectMicroservice({
     transport: Transport.TCP,
     options: {
-      port: 3000,
+      port: process.env.TRANSACTIONS_MS_PORT,
       host: '0.0.0.0'
     }
   })

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { DeleteResult, Repository } from 'typeorm'
 import { ItemSchema } from './item.entity'
 import { Item } from '@lib/models'
 
@@ -15,12 +15,20 @@ export class ItemsService {
     return this.itemsRepository.find()
   }
 
-  findByPlaidId(itemId: string): Promise<Item> {
-    return this.itemsRepository.findOne({ where: { itemId } })
+  findById(itemId: string): Promise<Item> {
+    return this.itemsRepository.findOneBy({ id: itemId })
+  }
+
+  findByPlaidId(plaidId: string): Promise<Item> {
+    return this.itemsRepository.findOne({ where: { itemId: plaidId } })
   }
 
   create(item: Item): Promise<Item> {
     console.log(item)
     return this.itemsRepository.save(item)
+  }
+
+  delete(itemId: string): Promise<DeleteResult> {
+    return this.itemsRepository.delete(itemId)
   }
 }

@@ -53,6 +53,11 @@ export const AccountSchema = new EntitySchema<Account>({
       type: 'many-to-one',
       target: 'user',
       nullable: false
+    },
+    item: {
+      type: 'many-to-one',
+      target: 'item',
+      nullable: false
     }
   }
 })

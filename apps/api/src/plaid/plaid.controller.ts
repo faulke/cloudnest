@@ -1,15 +1,18 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Inject, Post } from '@nestjs/common'
 import { ItemsService } from '@lib/items'
 import { PlaidService } from '@lib/plaid'
 import { LinkTokenRequest, LinkTokenResponse } from './plaid.dto'
 import { AccountsService, mapAccounts } from '@lib/accounts'
+import { ClientProxy } from '@nestjs/microservices'
+import { TRANSACTIONS_SERVICE } from '@lib/clients'
 
 @Controller('plaid')
 export class PlaidController {
   constructor(
+    @Inject(TRANSACTIONS_SERVICE) private txnsClient: ClientProxy,
     private readonly plaidService: PlaidService,
     private readonly itemsService: ItemsService,
-    private readonly accountsService: AccountsService
+    private readonly accountsService: AccountsService,
   ) {}
 
   @Post('/link-token')
@@ -32,7 +35,7 @@ export class PlaidController {
     const res = await this.plaidService.exchangePublicToken(token)
     const { access_token: accessToken, item_id: itemId } = res
     // create item in db
-    const item = await this.itemsService.create({
+    await this.itemsService.create({
       token: accessToken,
       itemId,
       userId,
@@ -40,32 +43,28 @@ export class PlaidController {
     })
 
     const accountsRes = await this.plaidService.getAccountsForItem(accessToken)
-    const accounts = mapAccounts(accountsRes.accounts, userId)
+    const accounts = mapAccounts(accountsRes.accounts, userId, itemId)
 
     // create accounts in db
     const updated = await this.accountsService.createOrUpdateMany(accounts)
 
-    this.plaidService.updateTransactions(accessToken).then(() => {
-      console.log('done with transactions!')
-    })
-    // redirect client to new accounts, but still fetching transactions
+    this.txnsClient.emit('sync_transactions', { token: accessToken })
 
-    // get transactions for item
-    // create/update transactions in db
-    // emit websocket that transactions are ready
-
-    // return accounts data
-    // - institution data + accounts list
+    // simulate sync available webhook for sandbox env
+    this.plaidService.fireWebhook(accessToken)
 
     return {
       data: updated
     }
   }
 
+  // list items in ui
+  // fire webhook button for item
   @Post('/hooks/test')
-  async testWebhook() {
+  async testWebhook(@Body() req) {
+    const { token } = req
     return await this.plaidService.fireWebhook(
-      ''
+      token
     )
   }
 }

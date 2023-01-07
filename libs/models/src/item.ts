@@ -1,3 +1,4 @@
+import { Account } from './account'
 import { User } from './user'
 
 export interface Item {
@@ -8,4 +9,5 @@ export interface Item {
   user?: User
   institutionId: string
   lastCursor?: string
+  accounts?: Account[]
 }

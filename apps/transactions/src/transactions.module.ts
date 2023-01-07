@@ -8,7 +8,7 @@ import { PlaidService } from '@lib/plaid'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([TransactionSchema], 'mongodb'),
+    TypeOrmModule.forFeature([TransactionSchema], 'transactions-db'),
     ConfigModule
   ],
   controllers: [TransactionsController],

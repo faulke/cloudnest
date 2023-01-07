@@ -3,21 +3,22 @@ import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { TransactionsModule } from './transactions.module'
 import { TransactionSchema } from './transaction.entity'
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      name: 'mongodb',
-      type: 'mongodb',
-      host: 'mongo',
-      port: 27017,
+      name: 'transactions-db',
+      type: 'postgres',
+      host: 'transactions-db',
+      port: parseInt(process.env.POSTGRES_PORT, 10),
       database: 'dev',
-      username: 'root',
-      password: 'example',
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
       entities: [TransactionSchema],
       synchronize: true,
-      authSource: 'admin'
+      namingStrategy: new SnakeNamingStrategy()
     }),
     TransactionsModule
   ],
