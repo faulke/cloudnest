@@ -7,7 +7,8 @@ export const TransactionSchema = new EntitySchema<Transaction>({
   columns: {
     id: {
       type: 'uuid',
-      primary: true
+      primary: true,
+      generated: 'uuid'
     },
     plaidId: {
       type: String
@@ -33,7 +34,8 @@ export const TransactionSchema = new EntitySchema<Transaction>({
       type: String
     },
     accountOwner: {
-      type: String
+      type: String,
+      nullable: true
     },
     pending: {
       type: Boolean

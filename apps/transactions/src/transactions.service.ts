@@ -40,7 +40,6 @@ export class TransactionsService {
 
     // fetch accounts for item from api
 
-
     // Iterate through each page of new transaction updates for item
     while (hasMore) {
       try {

@@ -10,7 +10,7 @@ export const ItemSchema = new EntitySchema<Item>({
       primary: true,
       generated: 'uuid'
     },
-    itemId: {
+    itemId: { // plaidId
       type: String,
       nullable: false,
       unique: true,
@@ -34,14 +34,12 @@ export const ItemSchema = new EntitySchema<Item>({
   relations: {
     user: {
       type: 'many-to-one',
-      target: 'user',
-      nullable: false
+      target: 'user'
     },
     accounts: {
       type: 'one-to-many',
       target: 'account',
-      onDelete: 'CASCADE',
-      eager: true
+      onDelete: 'CASCADE'
     }
   }
 })

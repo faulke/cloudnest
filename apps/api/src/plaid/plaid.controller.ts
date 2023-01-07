@@ -35,7 +35,7 @@ export class PlaidController {
     const res = await this.plaidService.exchangePublicToken(token)
     const { access_token: accessToken, item_id: itemId } = res
     // create item in db
-    await this.itemsService.create({
+    const item = await this.itemsService.create({
       token: accessToken,
       itemId,
       userId,
@@ -43,7 +43,7 @@ export class PlaidController {
     })
 
     const accountsRes = await this.plaidService.getAccountsForItem(accessToken)
-    const accounts = mapAccounts(accountsRes.accounts, userId, itemId)
+    const accounts = mapAccounts(accountsRes.accounts, userId, item.id)
 
     // create accounts in db
     const updated = await this.accountsService.createOrUpdateMany(accounts)

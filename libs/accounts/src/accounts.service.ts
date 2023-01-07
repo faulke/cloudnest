@@ -14,4 +14,8 @@ export class AccountsService {
   createOrUpdateMany(accounts: Account[]): Promise<Account[]> {
     return this.accountsRepo.save(accounts)
   }
+
+  getAccountsForItem(itemId: string): Promise<Account[]> {
+    return this.accountsRepo.find({ where: { itemId } })
+  }
 }

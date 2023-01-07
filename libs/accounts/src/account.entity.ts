@@ -44,8 +44,10 @@ export const AccountSchema = new EntitySchema<Account>({
       type: String
     },
     userId: {
-      type: 'uuid',
-      nullable: false
+      type: 'uuid'
+    },
+    itemId: {
+      type: String
     }
   },
   relations: {
