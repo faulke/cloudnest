@@ -5,8 +5,7 @@ export interface Item {
   itemId: string
   token: string
   userId: string
-  initReady?: boolean
-  historicalReady?: boolean
   user?: User
   institutionId: string
+  lastCursor?: string
 }

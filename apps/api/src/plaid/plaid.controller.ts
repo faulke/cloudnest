@@ -44,6 +44,10 @@ export class PlaidController {
 
     // create accounts in db
     const updated = await this.accountsService.createOrUpdateMany(accounts)
+
+    this.plaidService.updateTransactions(accessToken).then(() => {
+      console.log('done with transactions!')
+    })
     // redirect client to new accounts, but still fetching transactions
 
     // get transactions for item

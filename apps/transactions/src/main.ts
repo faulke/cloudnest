@@ -1,9 +1,9 @@
 import { NestFactory } from '@nestjs/core'
 import { Transport } from '@nestjs/microservices'
-import { TransactionsModule } from './transactions.module'
+import { AppModule } from './app.module'
 
 async function bootstrap() {
-  const app = await NestFactory.create(TransactionsModule)
+  const app = await NestFactory.create(AppModule)
   const port = process.env.TRANSACTIONS_PORT
   app.connectMicroservice({
     transport: Transport.TCP,
