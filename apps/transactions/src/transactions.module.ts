@@ -1,13 +1,17 @@
 import { Module } from '@nestjs/common'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule } from '@nestjs/config'
 import { TransactionsController } from './transactions.controller'
 import { TransactionsService } from './transactions.service'
-import { RavendbService } from '@lib/ravendb'
+import { TransactionSchema } from './transaction.entity'
 import { PlaidService } from '@lib/plaid'
 
 @Module({
-  imports: [ConfigModule.forRoot()],
+  imports: [
+    TypeOrmModule.forFeature([TransactionSchema], 'mongodb'),
+    ConfigModule
+  ],
   controllers: [TransactionsController],
-  providers: [TransactionsService, RavendbService, PlaidService]
+  providers: [TransactionsService, PlaidService]
 })
 export class TransactionsModule {}

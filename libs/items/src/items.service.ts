@@ -20,6 +20,7 @@ export class ItemsService {
   }
 
   create(item: Item): Promise<Item> {
+    console.log(item)
     return this.itemsRepository.save(item)
   }
 }

@@ -1,14 +1,11 @@
 import { Controller, Get } from '@nestjs/common'
 import { EventPattern } from '@nestjs/microservices'
-import { TransactionsService } from './transactions.service'
-import { RavendbService } from '@lib/ravendb'
 import { PlaidService } from '@lib/plaid'
 
 @Controller()
 export class TransactionsController {
   constructor(
-    private readonly transactionsService: TransactionsService,
-    private readonly ravendb: RavendbService,
+    // private readonly transactionsService: TransactionsService,
     private readonly plaid: PlaidService
   ) {}
 
@@ -20,7 +17,7 @@ export class TransactionsController {
   // start with the event pattern for microservices
   // move to worker processing events from queue
 
-  @EventPattern('get_transactions')
+  @EventPattern('sync_transactions')
   async syncTransactions(token: string) {
     console.log(token)
     // try {

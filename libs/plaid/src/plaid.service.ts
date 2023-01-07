@@ -8,8 +8,10 @@ import {
   CountryCode,
   SandboxItemFireWebhookRequest,
   SandboxItemFireWebhookRequestWebhookCodeEnum as WebhookCode,
-  TransactionsGetRequest,
-  AccountsGetRequest
+  AccountsGetRequest,
+  TransactionsSyncRequest,
+  Transaction,
+  RemovedTransaction
 } from 'plaid'
 
 @Injectable()
@@ -79,7 +81,8 @@ export class PlaidService {
     }
   }
 
-  async getTransactions(token: string) {
+// for webhooks
+    //
     // dates should switch based on webhook type:
     // INITIAL_UPDATE: today - 30 days
     // HISTORICAL_UPDATE: 30 days - way back??
@@ -87,13 +90,46 @@ export class PlaidService {
     //
     // will need to paginate. see example:
     // https://plaid.com/docs/api/products/transactions/#transactionsget
-    const req: TransactionsGetRequest = {
+
+  async syncTransactions(token: string, cursor?: string) {
+    // https://plaid.com/docs/api/products/transactions/#transactionssync
+    const req: TransactionsSyncRequest = {
       access_token: token,
-      start_date: '2021-03-15',
-      end_date: '2022-03-15'
+      cursor
     }
-    const res = await this.client.transactionsGet(req)
+    const res = await this.client.transactionsSync(req)
     return res.data
+  }
+
+  async updateTransactions(token: string, startCursor?: string) {
+    let cursor = startCursor
+
+    // New transaction updates since "cursor"
+    let added: Array<Transaction> = []
+    let modified: Array<Transaction> = []
+    // Removed transaction ids
+    let removed: Array<RemovedTransaction> = []
+    let hasMore = true
+    // Iterate through each page of new transaction updates for item
+    while (hasMore) {
+      const data = await this.syncTransactions(token, cursor)
+      console.log(data)
+      // Add this page of results
+      added = added.concat(data.added)
+      modified = modified.concat(data.modified)
+      removed = removed.concat(data.removed)
+      hasMore = data.has_more
+      // Update cursor to the next cursor
+      cursor = data.next_cursor
+    }
+
+    console.log(added.length)
+    console.log(cursor)
+
+    // added.concat(modified)
+    // saveTransactions(added)
+    // removeTransactions(removed)
+    // save cursor for item
   }
 
   async getAccountsForItem(token: string) {

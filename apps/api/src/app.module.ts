@@ -17,6 +17,7 @@ import {
 import { ItemSchema as Item } from '@lib/items'
 import { AccountSchema as Account } from '@lib/accounts'
 import Organization from './organizations/organization.entity'
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
 const ormConfig: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -26,8 +27,8 @@ const ormConfig: TypeOrmModuleOptions = {
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
   entities: [User, OrganizationUser, Item, Organization, Account],
-  synchronize: true
-  // namingStrategy: new SnakeNamingStrategy()
+  synchronize: true,
+  namingStrategy: new SnakeNamingStrategy()
 }
 
 @Module({

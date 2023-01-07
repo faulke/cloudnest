@@ -31,6 +31,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.2",
     "axios": "^0.26.1",
+    "mongodb": "^4.13.0",
     "pg": "^8.7.1",
     "plaid": "^9.6.0",
     "ravendb": "^5.2.1",

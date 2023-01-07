@@ -14,29 +14,21 @@ export const ItemSchema = new EntitySchema<Item>({
       type: String,
       nullable: false,
       unique: true,
-      name: 'item_id'
     },
     token: {
       type: String,
       nullable: false
     },
-    initReady: {
-      type: Boolean,
-      name: 'init_ready',
-      default: false
-    },
-    historicalReady: {
-      type: Boolean,
-      name: 'historical_ready',
-      default: false
-    },
-    userId: {
-      type: 'uuid',
-      nullable: false
-    },
     institutionId: {
       type: String,
       nullable: false
+    },
+    lastCursor: {
+      type: String,
+      nullable: true
+    },
+    userId: {
+      type: 'uuid'
     }
   },
   relations: {
