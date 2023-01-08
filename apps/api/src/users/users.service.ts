@@ -27,7 +27,7 @@ export class UsersService {
 
   async getOrgUserByEmail(email: string): Promise<OrganizationUser> {
     const { id: userId } = await this.getOrgUserByEmail(email)
-    const orgUser = await this.orgUsersRepo.findOne({ where: { userId } })
+    const orgUser = await this.orgUsersRepo.findOneBy({ userId })
     return orgUser
   }
 }

@@ -44,8 +44,10 @@ export const AccountSchema = new EntitySchema<Account>({
       type: String
     },
     userId: {
-      type: 'uuid',
-      nullable: false
+      type: 'uuid'
+    },
+    itemPlaidId: {
+      type: String
     }
   },
   relations: {
@@ -53,6 +55,12 @@ export const AccountSchema = new EntitySchema<Account>({
       type: 'many-to-one',
       target: 'user',
       nullable: false
+    },
+    item: {
+      type: 'many-to-one',
+      target: 'item',
+      nullable: false,
+      onDelete: 'CASCADE'
     }
   }
 })

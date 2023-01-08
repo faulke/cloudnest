@@ -1,9 +1,11 @@
+import { Item } from './item'
 import { User } from './user'
 
 export interface Account {
 	id?: string
 	plaidId: string
 	userId: string
+  itemPlaidId: string
 	name: string
 	mask: string
 	officialName: string
@@ -13,4 +15,5 @@ export interface Account {
 	currentBalance: number
 	currencyCode: string
 	user?: User
+  item?: Item
 }

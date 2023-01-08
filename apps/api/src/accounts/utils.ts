@@ -1,7 +1,7 @@
 import { Account } from '@lib/models'
 import { AccountBase } from 'plaid'
 
-export const mapAccounts = (accounts: AccountBase[], userId: string) => {
+export const mapAccounts = (accounts: AccountBase[], userId?: string, itemId?: string) => {
   return accounts.map((account) => {
     const {
       name,
@@ -15,6 +15,7 @@ export const mapAccounts = (accounts: AccountBase[], userId: string) => {
     return {
       userId,
       plaidId: accountId,
+      itemPlaidId: itemId,
       name,
       mask,
       officialName,

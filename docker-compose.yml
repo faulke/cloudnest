@@ -13,6 +13,7 @@ services:
       - /usr/src/app/node_modules
     ports:
       - ${API_PORT}:${API_PORT}
+      - ${API_MS_PORT}:${API_MS_PORT}
     env_file:
       - .env
     depends_on:
@@ -45,11 +46,11 @@ services:
       - /usr/src/app/node_modules
     ports:
       - ${TRANSACTIONS_PORT}:${TRANSACTIONS_PORT}
+      - ${TRANSACTIONS_MS_PORT}:${TRANSACTIONS_MS_PORT}
     env_file:
       - .env
     depends_on:
-      - db
-      - mongo
+      - transactions-db
   db:
     container_name: cloudnest-db
     image: postgres:14.0-alpine
@@ -66,6 +67,22 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+  transactions-db:
+    container_name: cloudnest-transactions-db
+    image: postgres:14.0-alpine
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${TRANSACTIONS_DB_PORT}:${POSTGRES_PORT}
+    expose:
+      - ${TRANSACTIONS_DB_PORT}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   proxy:
     container_name: proxy
     image: nginx
@@ -73,29 +90,27 @@ services:
       driver: none
     ports:
       - 80:80
-      - 443:443
     volumes:
       - ./apps/proxy/config:/etc/nginx
-      - ./apps/proxy/certs:/etc/ssl/private
     depends_on:
       - api
       - auth
       - transactions
-  mongo:
-    container_name: cloudnest-mongo
-    image: mongo:4.2.23-bionic
-    restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=example
-      - MONGO_INITDB_DATABASE=dev
-  mongo-express:
-    container_name: cloudnest-mongo-express
-    image: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=example
-      - ME_CONFIG_MONGODB_URL=mongodb://root:example@mongo:27017/
+  # mongo:
+  #   container_name: cloudnest-mongo
+  #   image: mongo:4.2.23-bionic
+  #   restart: always
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=root
+  #     - MONGO_INITDB_ROOT_PASSWORD=example
+  #     - MONGO_INITDB_DATABASE=dev
+  # mongo-express:
+  #   container_name: cloudnest-mongo-express
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+  #     - ME_CONFIG_MONGODB_ADMINPASSWORD=example
+  #     - ME_CONFIG_MONGODB_URL=mongodb://root:example@mongo:27017/

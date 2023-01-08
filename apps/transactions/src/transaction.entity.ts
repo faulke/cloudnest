@@ -7,57 +7,45 @@ export const TransactionSchema = new EntitySchema<Transaction>({
   columns: {
     id: {
       type: 'uuid',
-      primary: true,
       generated: 'uuid'
     },
     plaidId: {
       type: String,
-      nullable: false
+      primary: true
     },
     accountId: {
       type: String,
-      nullable: false
+      nullable: true
     },
     plaidAccountId: {
-      type: String,
-      nullable: false
+      type: String
     },
     category: {
-      type: String,
-      nullable: false
-    },
-    subcategory: {
-      type: String,
-      nullable: false
+      type: String
     },
     type: {
       type: String,
-      nullable: false
+      nullable: true
     },
     name: {
-      type: String,
-      nullable: false
+      type: String
     },
     currencyCode: {
-      type: String,
-      nullable: false
+      type: String
     },
     accountOwner: {
       type: String,
-      nullable: false
+      nullable: true
     },
     pending: {
-      type: Boolean,
-      default: false
+      type: Boolean
     },
     amount: {
       type: Number,
-      nullable: false,
       transformer: new DollarsTransformer()
     },
     date: {
-      type: String,
-      nullable: false
+      type: String
     }
   }
 })

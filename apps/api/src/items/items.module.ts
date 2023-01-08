@@ -1,21 +1,22 @@
 import { Module } from '@nestjs/common'
-import { ClientsModule, Transport } from '@nestjs/microservices'
-import { ItemsModule as ItemsLib } from '@lib/items'
+import { ItemsService } from './items.service'
+import { TransactionsClient } from '@lib/clients'
+import { PlaidModule } from '@lib/plaid'
 import { ItemsController } from './items.controller'
+import { ItemSubscriber } from './items.subcriber'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { ItemSchema } from './item.entity'
+import { AccountsModule } from '../accounts/accounts.module'
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: 'MATH_SERVICE',
-        transport: Transport.TCP,
-        options: {
-          host: 'transactions'
-        }
-      }
-    ]),
-    ItemsLib
+    TransactionsClient,
+    PlaidModule,
+    AccountsModule,
+    TypeOrmModule.forFeature([ItemSchema])
   ],
-  controllers: [ItemsController]
+  controllers: [ItemsController],
+  providers: [ItemsService, ItemSubscriber],
+  exports: [ItemsService]
 })
 export class ItemsModule {}

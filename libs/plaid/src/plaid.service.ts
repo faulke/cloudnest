@@ -11,7 +11,8 @@ import {
   AccountsGetRequest,
   TransactionsSyncRequest,
   Transaction,
-  RemovedTransaction
+  RemovedTransaction,
+  ItemRemoveRequest
 } from 'plaid'
 
 @Injectable()
@@ -39,9 +40,9 @@ export class PlaidService {
         client_user_id: userId
       },
       client_name: 'Plaid Test App',
-      products: [Products.Auth, Products.Transactions],
+      products: [Products.Auth, Products.Transactions, Products.Assets],
       language: 'en',
-      // webhook: 'https://0152-96-18-155-229.ngrok.io/items/hooks',
+      webhook: 'https://f504-96-18-155-229.ngrok.io/api/items/hooks',
       country_codes: [CountryCode.Us]
     }
 
@@ -67,18 +68,28 @@ export class PlaidService {
   }
 
   async fireWebhook(token: string) {
-    const req: SandboxItemFireWebhookRequest = {
+    const req = {
       access_token: token,
-      webhook_code: WebhookCode.DefaultUpdate
+      webhook_code: 'SYNC_UPDATES_AVAILABLE'
     }
 
     try {
-      const response = await this.client.sandboxItemFireWebhook(req)
+      const response = await this.client.sandboxItemFireWebhook(req as any)
       return response.data
     } catch (error) {
       console.log(error)
       return null
     }
+  }
+
+  async getTransactions(token: string) {
+    const req = {
+      access_token: token,
+      start_date: '2021-01-01',
+      end_date: '2023-01-01'
+    }
+    const res = await this.client.transactionsGet(req)
+    return res.data
   }
 
 // for webhooks
@@ -101,42 +112,19 @@ export class PlaidService {
     return res.data
   }
 
-  async updateTransactions(token: string, startCursor?: string) {
-    let cursor = startCursor
-
-    // New transaction updates since "cursor"
-    let added: Array<Transaction> = []
-    let modified: Array<Transaction> = []
-    // Removed transaction ids
-    let removed: Array<RemovedTransaction> = []
-    let hasMore = true
-    // Iterate through each page of new transaction updates for item
-    while (hasMore) {
-      const data = await this.syncTransactions(token, cursor)
-      console.log(data)
-      // Add this page of results
-      added = added.concat(data.added)
-      modified = modified.concat(data.modified)
-      removed = removed.concat(data.removed)
-      hasMore = data.has_more
-      // Update cursor to the next cursor
-      cursor = data.next_cursor
-    }
-
-    console.log(added.length)
-    console.log(cursor)
-
-    // added.concat(modified)
-    // saveTransactions(added)
-    // removeTransactions(removed)
-    // save cursor for item
-  }
-
   async getAccountsForItem(token: string) {
     const req: AccountsGetRequest = {
       access_token: token
     }
     const res = await this.client.accountsGet(req)
+    return res.data
+  }
+
+  async removeItem(token: string) {
+    const req: ItemRemoveRequest = {
+      access_token: token
+    }
+    const res = await this.client.itemRemove(req)
     return res.data
   }
 }

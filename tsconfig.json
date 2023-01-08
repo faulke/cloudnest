@@ -30,12 +30,6 @@
       "@lib/dto/*": [
         "libs/dto/src/*"
       ],
-      "@lib/items": [
-        "libs/items/src"
-      ],
-      "@lib/items/*": [
-        "libs/items/src/*"
-      ],
       "@lib/ravendb": [
         "libs/ravendb/src"
       ],
@@ -48,11 +42,11 @@
       "@lib/plaid/*": [
         "libs/plaid/src/*"
       ],
-      "@lib/accounts": [
-        "libs/accounts/src"
+      "@lib/clients": [
+        "libs/clients/src"
       ],
-      "@lib/accounts/*": [
-        "libs/accounts/src/*"
+      "@lib/clients/*": [
+        "libs/clients/src/*"
       ]
     }
   }

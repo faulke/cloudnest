@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common'
-import { AccountsModule as AccountsLib } from '@lib/accounts'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { AccountSchema } from './account.entity'
 import { AccountsController } from './accounts.controller'
+import { AccountsService } from './accounts.service'
 
 @Module({
   imports:[
-    AccountsLib
+    TypeOrmModule.forFeature([AccountSchema])
   ],
-  controllers: [AccountsController]
+  controllers: [AccountsController],
+  providers: [AccountsService],
+  exports: [AccountsService]
 })
 export class AccountsModule {}

@@ -24,12 +24,12 @@
     "test:e2e": "jest --config ./apps/api/test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^8.0.0",
-    "@nestjs/config": "^1.1.0",
-    "@nestjs/core": "^8.0.0",
-    "@nestjs/microservices": "^8.2.0",
-    "@nestjs/platform-express": "^8.0.0",
-    "@nestjs/typeorm": "^8.0.2",
+    "@nestjs/common": "^9.2.1",
+    "@nestjs/config": "^2.2.0",
+    "@nestjs/core": "^9.2.1",
+    "@nestjs/microservices": "^9.2.1",
+    "@nestjs/platform-express": "^9.2.1",
+    "@nestjs/typeorm": "^9.0.1",
     "axios": "^0.26.1",
     "mongodb": "^4.13.0",
     "pg": "^8.7.1",
@@ -38,13 +38,13 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.2.38",
-    "typeorm-naming-strategies": "^4.0.0"
+    "typeorm": "^0.3.11",
+    "typeorm-naming-strategies": "^4.1.0"
   },
   "devDependencies": {
-    "@nestjs/cli": "^8.0.0",
-    "@nestjs/schematics": "^8.0.0",
-    "@nestjs/testing": "^8.0.0",
+    "@nestjs/cli": "^9.1.8",
+    "@nestjs/schematics": "^9.0.4",
+    "@nestjs/testing": "^9.2.1",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.0.0",
@@ -89,10 +89,9 @@
       "^@lib/back(|/.*)$": "<rootDir>/libs/back/src/$1",
       "^@lib/front(|/.*)$": "<rootDir>/libs/front/src/$1",
       "^@lib/dto(|/.*)$": "<rootDir>/libs/dto/src/$1",
-      "^@lib/items(|/.*)$": "<rootDir>/libs/items/src/$1",
       "^@lib/ravendb(|/.*)$": "<rootDir>/libs/ravendb/src/$1",
       "^@lib/plaid(|/.*)$": "<rootDir>/libs/plaid/src/$1",
-      "^@lib/accounts(|/.*)$": "<rootDir>/libs/accounts/src/$1"
+      "^@lib/clients(|/.*)$": "<rootDir>/libs/clients/src/$1"
     }
   }
 }
