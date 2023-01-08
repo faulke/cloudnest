@@ -1,8 +1,8 @@
-import { Transaction } from '@lib/models'
+import { Account, Transaction } from '@lib/models'
 import { Transaction as PlaidTransaction } from 'plaid'
 
 // map transactions
-export const mapTransactions = (txns: PlaidTransaction[]) => {
+export const mapTransactions = (txns: PlaidTransaction[], plaidAccounts: { [plaidAccountId: string]: string }) => {
   return txns.map((txn) => {
     const {
       // do we need to store our internal account id?
@@ -17,7 +17,11 @@ export const mapTransactions = (txns: PlaidTransaction[]) => {
       payment_channel: type,
       amount
     } = txn
+
+    const accountId = plaidAccounts[plaidAccountId]
+
     return {
+      accountId,
       plaidId,
       plaidAccountId,
       category: category.join(','),

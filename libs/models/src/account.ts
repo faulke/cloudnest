@@ -5,7 +5,7 @@ export interface Account {
 	id?: string
 	plaidId: string
 	userId: string
-  itemId: string
+  itemPlaidId: string
 	name: string
 	mask: string
 	officialName: string

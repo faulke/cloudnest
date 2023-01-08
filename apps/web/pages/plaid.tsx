@@ -30,7 +30,7 @@ const App: NextPage = () => {
       </button>
       {items.map((item) => (
         <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', width: '700px', marginTop: '8px'}}>
-          <div>{item.itemId}</div>
+          <div>{item.plaidId}</div>
           <button type='button' onClick={() => fireWebhook(item.token)}>Fire webhook</button>
           <button type='button' onClick={() => removeItem(item.id)}>Remove</button>
         </div>

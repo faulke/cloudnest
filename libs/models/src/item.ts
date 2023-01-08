@@ -3,7 +3,7 @@ import { User } from './user'
 
 export interface Item {
   id?: string
-  itemId: string
+  plaidId: string
   token: string
   userId: string
   user?: User

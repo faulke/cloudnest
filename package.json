@@ -89,10 +89,8 @@
       "^@lib/back(|/.*)$": "<rootDir>/libs/back/src/$1",
       "^@lib/front(|/.*)$": "<rootDir>/libs/front/src/$1",
       "^@lib/dto(|/.*)$": "<rootDir>/libs/dto/src/$1",
-      "^@lib/items(|/.*)$": "<rootDir>/libs/items/src/$1",
       "^@lib/ravendb(|/.*)$": "<rootDir>/libs/ravendb/src/$1",
       "^@lib/plaid(|/.*)$": "<rootDir>/libs/plaid/src/$1",
-      "^@lib/accounts(|/.*)$": "<rootDir>/libs/accounts/src/$1",
       "^@lib/clients(|/.*)$": "<rootDir>/libs/clients/src/$1"
     }
   }

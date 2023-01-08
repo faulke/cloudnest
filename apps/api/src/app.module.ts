@@ -4,7 +4,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { UsersModule } from './users/users.module'
-import { PlaidModule } from './plaid/plaid.module'
+import { PlaidModule } from '@lib/plaid'
 import { ItemsModule } from './items/items.module'
 import { OrganizationsModule } from './organizations/organizations.module'
 import { AccountsModule } from './accounts/accounts.module'
@@ -14,8 +14,8 @@ import {
   UserSchema as User,
   OrganizationUserSchema as OrganizationUser
 } from './users/user.entity'
-import { ItemSchema as Item } from '@lib/items'
-import { AccountSchema as Account } from '@lib/accounts'
+import { ItemSchema as Item } from './items/item.entity'
+import { AccountSchema as Account } from './accounts/account.entity'
 import Organization from './organizations/organization.entity'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 

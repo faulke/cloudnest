@@ -11,6 +11,7 @@ export class TransactionsController {
   @Get()
   async getTransactions() {
     const txns = await this.transactionsService.getTransactions()
+    console.log(txns.length)
     return txns
   }
 
@@ -27,12 +28,12 @@ export class TransactionsController {
   // move to worker processing events from queue
 
   @EventPattern('sync_transactions')
-  async syncTransactions(req: { token: string, cursor?: string }) {
-    const { token, cursor } = req
+  async syncTransactions(req: { token: string, itemId: string, cursor?: string }) {
+    const { token, cursor, itemId } = req
     console.log('RECEIVED REQUEST: ', req)
     // need some logs here
 
-    await this.transactionsService.updateTransactions(token, cursor)
+    await this.transactionsService.updateTransactions(itemId, token, cursor)
 
     return {}
   }

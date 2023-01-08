@@ -7,11 +7,11 @@ export const TransactionSchema = new EntitySchema<Transaction>({
   columns: {
     id: {
       type: 'uuid',
-      primary: true,
       generated: 'uuid'
     },
     plaidId: {
-      type: String
+      type: String,
+      primary: true
     },
     accountId: {
       type: String,

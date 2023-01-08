@@ -7,7 +7,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       name: 'transactions-db',
       type: 'postgres',

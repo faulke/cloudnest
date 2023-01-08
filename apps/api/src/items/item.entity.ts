@@ -7,13 +7,13 @@ export const ItemSchema = new EntitySchema<Item>({
   columns: {
     id: {
       type: 'uuid',
-      primary: true,
       generated: 'uuid'
     },
-    itemId: { // plaidId
+    plaidId: {
       type: String,
       nullable: false,
       unique: true,
+      primary: true
     },
     token: {
       type: String,

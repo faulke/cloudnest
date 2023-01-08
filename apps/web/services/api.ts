@@ -17,7 +17,7 @@ export const api = createApi({
     }),
     getLinkToken: builder.mutation<any, string>({
       query: (userId: string) => ({
-        url: '/plaid/link-token',
+        url: '/items/link-token',
         method: 'POST',
         body: { userId }
       }),
@@ -25,7 +25,7 @@ export const api = createApi({
     }),
     exchangeToken: builder.mutation<any, { token: string; userId: string, institutionId: string }>({
       query: ({ token, userId, institutionId }) => ({
-        url: '/plaid/exchange-token',
+        url: '/items/exchange-token',
         method: 'POST',
         body: { token, userId, institutionId }
       }),
@@ -36,7 +36,7 @@ export const api = createApi({
     }),
     fireWebhook: builder.mutation<any, string>({
       query: (token: string) => ({
-        url: '/plaid/hooks/test',
+        url: '/items/hooks/test',
         method: 'POST',
         body: { token }
       })

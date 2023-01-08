@@ -20,7 +20,7 @@ export class ItemsService {
   }
 
   findByPlaidId(plaidId: string): Promise<Item> {
-    return this.itemsRepository.findOne({ where: { itemId: plaidId } })
+    return this.itemsRepository.findOne({ where: { plaidId } })
   }
 
   create(item: Item): Promise<Item> {
@@ -29,6 +29,6 @@ export class ItemsService {
   }
 
   delete(itemId: string): Promise<DeleteResult> {
-    return this.itemsRepository.delete(itemId)
+    return this.itemsRepository.delete({ id: itemId })
   }
 }

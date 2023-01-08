@@ -15,7 +15,7 @@ export const mapAccounts = (accounts: AccountBase[], userId?: string, itemId?: s
     return {
       userId,
       plaidId: accountId,
-      itemId,
+      itemPlaidId: itemId,
       name,
       mask,
       officialName,
