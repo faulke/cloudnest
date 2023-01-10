@@ -31,9 +31,11 @@
     "@nestjs/platform-express": "^9.2.1",
     "@nestjs/typeorm": "^9.0.1",
     "axios": "^0.26.1",
+    "cache-manager": "^5.1.4",
+    "jsonwebtoken": "^9.0.0",
+    "jwks-rsa": "^3.0.0",
     "pg": "^8.7.1",
     "plaid": "^9.6.0",
-    "ravendb": "^5.2.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
@@ -85,10 +87,6 @@
     ],
     "moduleNameMapper": {
       "^@lib/models(|/.*)$": "<rootDir>/libs/models/src/$1",
-      "^@lib/back(|/.*)$": "<rootDir>/libs/back/src/$1",
-      "^@lib/front(|/.*)$": "<rootDir>/libs/front/src/$1",
-      "^@lib/dto(|/.*)$": "<rootDir>/libs/dto/src/$1",
-      "^@lib/ravendb(|/.*)$": "<rootDir>/libs/ravendb/src/$1",
       "^@lib/plaid(|/.*)$": "<rootDir>/libs/plaid/src/$1",
       "^@lib/clients(|/.*)$": "<rootDir>/libs/clients/src/$1"
     }

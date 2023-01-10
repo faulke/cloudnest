@@ -24,18 +24,6 @@
       "@lib/models/*": [
         "libs/models/src/*"
       ],
-      "@lib/dto": [
-        "libs/dto/src"
-      ],
-      "@lib/dto/*": [
-        "libs/dto/src/*"
-      ],
-      "@lib/ravendb": [
-        "libs/ravendb/src"
-      ],
-      "@lib/ravendb/*": [
-        "libs/ravendb/src/*"
-      ],
       "@lib/plaid": [
         "libs/plaid/src"
       ],
