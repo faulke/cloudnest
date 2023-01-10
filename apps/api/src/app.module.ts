@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Module, NestModule, MiddlewareConsumer, CacheModule, RequestMethod } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { AppController } from './app.controller'
@@ -18,6 +18,7 @@ import { ItemSchema as Item } from './items/item.entity'
 import { AccountSchema as Account } from './accounts/account.entity'
 import Organization from './organizations/organization.entity'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
+import { AuthMiddleware } from './middleware/auth'
 
 const ormConfig: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -34,6 +35,7 @@ const ormConfig: TypeOrmModuleOptions = {
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    CacheModule.register({ isGlobal: true }),
     TypeOrmModule.forRoot(ormConfig),
     UsersModule,
     PlaidModule,
@@ -44,4 +46,17 @@ const ormConfig: TypeOrmModuleOptions = {
   controllers: [AppController],
   providers: [AppService]
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes(
+        { path: '/items', method: RequestMethod.GET },
+        '/items/hooks/test',
+        '/items/*-token',
+        { path: '/items', method: RequestMethod.DELETE },
+        '/accounts',
+        '/users'
+      )
+  }
+}

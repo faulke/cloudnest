@@ -20,7 +20,12 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "@lib/models": [
+        "../../libs/models/src"
+      ]
+    }
   },
   "include": [
     "next-env.d.ts",

@@ -26,15 +26,6 @@
         "tsConfigPath": "libs/models/tsconfig.lib.json"
       }
     },
-    "dto": {
-      "type": "library",
-      "root": "libs/dto",
-      "entryFile": "index",
-      "sourceRoot": "libs/dto/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/dto/tsconfig.lib.json"
-      }
-    },
     "transactions": {
       "type": "application",
       "root": "apps/transactions",
@@ -51,15 +42,6 @@
       "sourceRoot": "libs/items/src",
       "compilerOptions": {
         "tsConfigPath": "libs/items/tsconfig.lib.json"
-      }
-    },
-    "ravendb": {
-      "type": "library",
-      "root": "libs/ravendb",
-      "entryFile": "index",
-      "sourceRoot": "libs/ravendb/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/ravendb/tsconfig.lib.json"
       }
     },
     "plaid": {

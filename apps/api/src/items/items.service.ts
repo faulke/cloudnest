@@ -11,8 +11,8 @@ export class ItemsService {
     private itemsRepository: Repository<Item>
   ) {}
 
-  findAll(): Promise<Item[]> {
-    return this.itemsRepository.find()
+  findAll(userId: string): Promise<Item[]> {
+    return this.itemsRepository.find({ where: { userId } })
   }
 
   findById(itemId: string): Promise<Item> {

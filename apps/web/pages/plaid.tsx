@@ -1,13 +1,14 @@
 import { useCallback, FC, useEffect } from 'react'
 import type { NextPage } from 'next'
 import { usePlaidLink } from 'react-plaid-link'
+import { Item } from '@lib/models'
 import {
   useGetLinkTokenMutation,
   useExchangeTokenMutation,
   useFireWebhookMutation,
   useGetItemsQuery,
   useRemoveItemMutation
-} from '../services/api'
+} from '../services/items'
 
 const userId = 'cf8eeabd-b77e-4547-b604-e1075404dc23'
 
@@ -18,17 +19,15 @@ const App: NextPage = () => {
   const [removeItem] = useRemoveItemMutation()
   const { linkToken } = data
 
-  if (linkToken) {
-    return <Link linkToken={linkToken} />
-  }
-
   return (
     <div>
       <div>Get token for user: {userId}</div>
       <button type='button' onClick={() => getToken(userId)} style={{ marginBottom: '12px' }}>
         Link New Item
       </button>
-      {items.map((item) => (
+      {linkToken && (<Link linkToken={linkToken} />)}
+      {isLoading && <div>Loading items...</div>}
+      {items.map((item: Item) => (
         <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', width: '700px', marginTop: '8px'}}>
           <div>{item.plaidId}</div>
           <button type='button' onClick={() => fireWebhook(item.token)}>Fire webhook</button>
@@ -72,4 +71,5 @@ const Link: FC<LinkProps> = (props: LinkProps) => {
     </div>
   )
 }
+
 export default App
