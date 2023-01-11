@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { DeleteResult, Repository } from 'typeorm'
+import { DeleteResult, Repository, UpdateResult } from 'typeorm'
 import { ItemSchema } from './item.entity'
 import { Item } from '@lib/models'
 
@@ -30,5 +30,9 @@ export class ItemsService {
 
   delete(itemId: string): Promise<DeleteResult> {
     return this.itemsRepository.delete({ id: itemId })
+  }
+
+  updateCursor(itemId: string, lastCursor: string): Promise<UpdateResult> {
+    return this.itemsRepository.update({ plaidId: itemId }, { lastCursor })
   }
 }

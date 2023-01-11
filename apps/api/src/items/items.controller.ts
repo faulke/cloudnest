@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Inject, Delete, Param, Req } from '@nestjs/common'
-import { ClientProxy } from '@nestjs/microservices'
+import { ClientProxy, EventPattern } from '@nestjs/microservices'
 import { DefaultUpdateWebhook } from 'plaid'
 import { ItemsService } from './items.service'
 import { PlaidService } from '@lib/plaid'
@@ -7,7 +7,7 @@ import { TRANSACTIONS_SERVICE } from '@lib/clients'
 import { LinkTokenRequest, LinkTokenResponse } from '@lib/plaid'
 import { mapAccounts } from '../accounts/utils'
 import { AccountsService } from '../accounts/accounts.service'
-import { Request } from 'express'
+import { NestRequest } from '../middleware/auth'
 
 @Controller('items')
 export class ItemsController {
@@ -19,7 +19,7 @@ export class ItemsController {
   ) {}
 
   @Get()
-  async getItems(@Req() request: any) { // need to use RequestContext
+  async getItems(@Req() request: NestRequest) {
     return {
       data: await this.itemsService.findAll(request.userId)
     }
@@ -34,8 +34,13 @@ export class ItemsController {
       // remove from plaid
       await this.plaidService.removeItem(item.token)
 
+      // get associated accounts to delete transactions later
+      const accounts = await this.accountsService.getAccountsForItem(item.plaidId)
+
       // delete from db
       const res = await this.itemsService.delete(id)
+
+      this.txnsClient.emit('delete_transactions', { accountIds: accounts.map(acc => acc.id) })
 
       return { removed: res.affected > 0 }
     } catch (error) {
@@ -92,8 +97,6 @@ export class ItemsController {
     }
   }
 
-  // list items in ui
-  // fire webhook button for item
   @Post('/hooks/test')
   async testWebhook(@Body() req) {
     const { token } = req
@@ -109,9 +112,15 @@ export class ItemsController {
     if (code === 'SYNC_UPDATES_AVAILABLE') {
       const item = await this.itemsService.findByPlaidId(itemId)
   
-      this.txnsClient.emit('sync_transactions', { token: item.token, cursor: item.lastCursor })
+      this.txnsClient.emit('sync_transactions', { token: item.token, cursor: item.lastCursor, itemId })
     }
 
-    return { }
+    return { result: 'ok' }
+  }
+
+  @EventPattern('items:update_cursor')
+  updateCursor(req: { itemId: string, cursor: string }) {
+    const { itemId, cursor } = req
+    this.itemsService.updateCursor(itemId, cursor)
   }
 }

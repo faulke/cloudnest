@@ -26,12 +26,16 @@ const getTokenFromRequest = (req: Request): { token: string | null, error: strin
   return res
 }
 
+export interface NestRequest extends Request {
+  userId?: string
+}
+
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
   constructor(
     private readonly usersService: UsersService
   ) {}
-  async use(req: Request, res: Response, next: NextFunction) {
+  async use(req: NestRequest, res: Response, next: NextFunction) {
     const { token, error: tokenError } = getTokenFromRequest(req)
     if (tokenError) {
       return res.status(400).send(tokenError)
@@ -42,7 +46,7 @@ export class AuthMiddleware implements NestMiddleware {
       return res.status(401).send(error)
     }
     
-    (req as any).userId = userId
+    req.userId = userId
 
     next()
   }
