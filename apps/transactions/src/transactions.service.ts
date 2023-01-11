@@ -6,7 +6,7 @@ import { ClientProxy } from '@nestjs/microservices'
 import { InjectRepository } from '@nestjs/typeorm'
 import { RemovedTransaction } from 'plaid'
 import { lastValueFrom } from 'rxjs'
-import { Repository, UpdateResult } from 'typeorm'
+import { In, Repository, UpdateResult } from 'typeorm'
 import { TransactionSchema } from './transaction.entity'
 import { mapTransactions } from './utils'
 
@@ -45,6 +45,7 @@ export class TransactionsService {
     // fetch accounts for item from api via microservice
     const res = this.apiClient.send('item:accounts', { itemId })
     const accounts: Account[] = await lastValueFrom(res)
+
     const plaidAccounts = accounts.reduce((p, account) => {
       p[account.plaidId] = account.id
       return p
@@ -71,15 +72,21 @@ export class TransactionsService {
     added.concat(modified)
 
     try {
-      const res = await this.createOrUpdateMany(added)
+      await this.createOrUpdateMany(added)
     } catch (error) {
       console.log(error)
     }
 
     // removeTransactions(removed) - remove by plaidId
 
-    // save cursor for item
-    // emit ms event picked up by item controller
+    this.apiClient.emit('items:update_cursor', { itemId, cursor })
+  }
 
+  deleteForAccounts(accountIds: string[]) {
+    return this.transactionsRepo
+      .createQueryBuilder()
+      .delete()
+      .where({ accountId: In([...accountIds]) })
+      .execute()
   }
 }

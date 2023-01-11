@@ -16,6 +16,6 @@ export class AccountsService {
   }
 
   getAccountsForItem(itemId: string): Promise<Account[]> {
-    return this.accountsRepo.find({ where: { plaidId: itemId } })
+    return this.accountsRepo.find({ where: { itemPlaidId: itemId } })
   }
 }
