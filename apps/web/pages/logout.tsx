@@ -6,7 +6,7 @@ const Logout: NextPage = () => {
   const { logout } = useAuth0()
 
   useEffect(() => {
-    logout({ returnTo: process.env.NEXT_PUBLIC_HOME })
+    logout({ returnTo: `${process.env.NEXT_PUBLIC_HOME}/login` })
   }, [])
 
   return <div>loggin out</div>

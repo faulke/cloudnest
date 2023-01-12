@@ -1,20 +1,13 @@
 import type { NextPage } from 'next'
-import Link from 'next/link'
 import { useAuth0 } from '@auth0/auth0-react'
+import Button from '@mui/material/Button'
+import Link from 'next/link'
 
 const App: NextPage = () => {
-  const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0()
-
-  if (isLoading) {
-    return <div>Loading ...</div>
-  }
-
-  if (!isAuthenticated) {
-    return <button onClick={loginWithRedirect}>Login</button>
-  }
+  const { user } = useAuth0()
 
   return (
-    isAuthenticated && (
+    user && (
       <div>
         <img src={user.picture} alt={user.name} />
         <h2>{user.name}</h2>
