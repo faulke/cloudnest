@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import authMiddleware from './middleware/auth'
 // Or from '@reduxjs/toolkit/query/react'
 // import { setupListeners } from '@reduxjs/toolkit/query'
 import { itemsApi } from './services/items'
@@ -12,7 +13,8 @@ export const store = configureStore({
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
-      itemsApi.middleware
+      itemsApi.middleware,
+      authMiddleware
     )
 })
 

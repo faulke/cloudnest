@@ -57,22 +57,27 @@ export class UsersService {
       this.cacheManager.set('jwk', jwk)
     }
 
-    const verified = jwt.verify(token, jwk as any)
-    const externalUserId = verified[this.configService.get('AUTH0_USERID_CLAIM')]
-    let userId = await this.cacheManager.get(externalUserId)
+    try {
+      const verified = jwt.verify(token, jwk as any)
+      const externalUserId = verified[this.configService.get('AUTH0_USERID_CLAIM')]
+      let userId = await this.cacheManager.get(externalUserId)
+    
+      if (!userId) {
+        const user = await this.getUserByExternalId(externalUserId)
+        if (!user) {
+          res.error = 'User not found'
+          return res
+        }
   
-    if (!userId) {
-      const user = await this.getUserByExternalId(externalUserId)
-      if (!user) {
-        res.error = 'User not found'
-        return res
+        userId = user.id
+        this.cacheManager.set(externalUserId, userId)
       }
-
-      userId = user.id
-      this.cacheManager.set(externalUserId, userId)
+  
+      res.userId = userId
+      return res
+    } catch (error) {
+      res.error = 'Failed to verify token'
+      return res
     }
-
-    res.userId = userId
-    return res
   }
 }

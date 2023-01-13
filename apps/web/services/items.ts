@@ -19,7 +19,10 @@ export const itemsApi = createApi({
     getItems: builder.query<any, void>({
       query: () => '/',
       transformResponse: (response: { data }) => response.data,
-      providesTags: (result) => {
+      providesTags: (result, error) => {
+        if (error) {
+          return []
+        }
         return [
           ...result.map(({ id }) => ({ type: 'Items', id })),
           { type: 'Items', id: 'LIST' }
@@ -42,6 +45,9 @@ export const itemsApi = createApi({
       }),
       transformResponse: (response: { data }) => response.data,
       invalidatesTags: (result, error, id) => {
+        if (error) {
+          return []
+        }
         return [{ type: 'Items', id: 'LIST' }]
       }
     }),
@@ -58,6 +64,9 @@ export const itemsApi = createApi({
         method: 'DELETE'
       }),
       invalidatesTags: (result, error, id) => {
+        if (error) {
+          return []
+        }
         return [{ type: 'Items', id: 'LIST' }]
       }
     })

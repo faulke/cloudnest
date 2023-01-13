@@ -4,14 +4,13 @@ import { useRouter } from 'next/router'
 const AuthChecker= ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth0()
   const router = useRouter()
-  console.log(router)
-  console.log(isLoading, isAuthenticated)
+  const { pathname } = router
 
   if (isLoading) {
-    return <div>Loading user...</div>
+    return null // or spinner
   }
 
-  if (!isAuthenticated && router.asPath !== '/login') {
+  if (!isAuthenticated && pathname !== '/login') {
     router.push('/login')
     return <div>Redirecting to login</div>
   }
