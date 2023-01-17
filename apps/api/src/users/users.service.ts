@@ -5,16 +5,14 @@ import { Repository } from 'typeorm'
 import { Cache } from 'cache-manager'
 import * as jwt from 'jsonwebtoken'
 import * as jwksClient from 'jwks-rsa'
-import UserSchema, { OrganizationUserSchema } from './user.entity'
-import { OrganizationUser, User } from '@lib/models'
+import UserSchema from './user.entity'
+import { User } from '@lib/models'
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserSchema)
     private usersRepo: Repository<User>,
-    @InjectRepository(OrganizationUserSchema)
-    private orgUsersRepo: Repository<OrganizationUser>,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly configService: ConfigService,
   ) {}
@@ -29,12 +27,6 @@ export class UsersService {
 
   getUserByEmail(email: string): Promise<User> {
     return this.usersRepo.findOne({ where: { email } })
-  }
-
-  async getOrgUserByEmail(email: string): Promise<OrganizationUser> {
-    const { id: userId } = await this.getOrgUserByEmail(email)
-    const orgUser = await this.orgUsersRepo.findOneBy({ userId })
-    return orgUser
   }
 
   getUserByExternalId(externalId: string): Promise<User> {

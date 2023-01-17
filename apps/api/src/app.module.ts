@@ -14,13 +14,13 @@ import { AccountsModule } from './accounts/accounts.module'
 import { DoorsModule } from './doors/doors.module'
 
 // entities
-import {
-  UserSchema as User,
-  OrganizationUserSchema as OrganizationUser
-} from './users/user.entity'
+import { UserSchema as User } from './users/user.entity'
 import { ItemSchema as Item } from './items/item.entity'
 import { AccountSchema as Account } from './accounts/account.entity'
-import { OrganizationSchema as Organization } from './organizations/organization.entity'
+import {
+  OrganizationSchema as Organization,
+  OrganizationUserSchema as OrganizationUser
+} from './organizations/organization.entity'
 import { DoorSchema as Door } from './doors/door.entity'
 
 import { AuthMiddleware } from './middleware/auth'

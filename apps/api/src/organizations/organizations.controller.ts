@@ -23,5 +23,7 @@ export class OrganizationsController {
         createdById: request.userId
       })
     }
+
+    // add organization user w/ role Admin
   }
 }

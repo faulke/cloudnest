@@ -1,12 +1,18 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import OrganizationSchema from './organization.entity'
+import {
+  OrganizationSchema,
+  OrganizationUserSchema
+} from './organization.entity'
 import { OrganizationsController } from './organizations.controller'
 import { OrganizationsService } from './organizations.service'
 
 @Module({
   imports:[
-    TypeOrmModule.forFeature([OrganizationSchema])
+    TypeOrmModule.forFeature([
+      OrganizationSchema,
+      OrganizationUserSchema
+    ])
   ],
   controllers: [OrganizationsController],
   providers: [OrganizationsService]

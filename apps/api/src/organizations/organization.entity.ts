@@ -1,5 +1,5 @@
 import { EntitySchema } from 'typeorm'
-import { Organization } from '@lib/models'
+import { Organization, OrganizationUser, Role } from '@lib/models'
 
 export const OrganizationSchema = new EntitySchema<Organization>({
   name: 'organization',
@@ -22,7 +22,9 @@ export const OrganizationSchema = new EntitySchema<Organization>({
     users: {
       type: 'one-to-many',
       target: 'organization_user',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      eager: true,
+      inverseSide: 'organization'
     },
     doors: {
       type: 'one-to-many',
@@ -33,6 +35,46 @@ export const OrganizationSchema = new EntitySchema<Organization>({
       type: 'many-to-one',
       target: 'user',
       eager: true
+    }
+  }
+})
+
+export const OrganizationUserSchema = new EntitySchema<OrganizationUser>({
+  name: 'organization_user',
+  tableName: 'organization_users',
+  columns: {
+    id: {
+      type: 'uuid',
+      primary: true,
+      generated: 'uuid'
+    },
+    roles: {
+      type: 'enum',
+      enum: Role,
+      array: true,
+      default: [Role.Admin]
+    },
+    isActive: {
+      name: 'is_active',
+      type: Boolean,
+      default: true
+    },
+    userId: {
+      type: String
+    },
+    organizationId: {
+      type: String
+    }
+  },
+  relations: {
+    user: {
+      type: 'many-to-one',
+      target: 'user'
+    },
+    organization: {
+      type: 'many-to-one',
+      target: 'organization',
+      joinColumn: true
     }
   }
 })
