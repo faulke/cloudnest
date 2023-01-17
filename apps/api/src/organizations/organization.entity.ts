@@ -48,11 +48,10 @@ export const OrganizationUserSchema = new EntitySchema<OrganizationUser>({
       primary: true,
       generated: 'uuid'
     },
-    roles: {
+    role: {
       type: 'enum',
       enum: Role,
-      array: true,
-      default: [Role.Admin]
+      default: Role.Admin
     },
     isActive: {
       name: 'is_active',

@@ -21,7 +21,7 @@ export class OrganizationsService {
     const newOrg = await this.orgsRepo.save(org)
     const user = await this.orgUsersRepo.save({
       userId: newOrg.createdById,
-      roles: [Role.Admin],
+      role: Role.Admin,
       isActive: true,
       organizationId: newOrg.id
     })
