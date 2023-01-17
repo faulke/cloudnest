@@ -1,19 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { auth0Client } from '../utils/auth'
+import { query } from '../utils/auth'
 
 export const itemsApi = createApi({
   reducerPath: 'items',
-  baseQuery: fetchBaseQuery({
-    baseUrl: `http://${process.env.NEXT_PUBLIC_API_HOST}/api/items`,
-    prepareHeaders: async (headers) => {
-      const token = await auth0Client.getTokenSilently()
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`)
-      }
-
-      return headers
-    }
-  }),
+  baseQuery: fetchBaseQuery(query('items')),
   tagTypes: ['Items'],
   endpoints: (builder) => ({
     getItems: builder.query<any, void>({

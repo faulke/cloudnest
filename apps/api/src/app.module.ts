@@ -1,13 +1,17 @@
 import { Module, NestModule, MiddlewareConsumer, CacheModule, RequestMethod } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+
+// modules
 import { UsersModule } from './users/users.module'
 import { PlaidModule } from '@lib/plaid'
 import { ItemsModule } from './items/items.module'
 import { OrganizationsModule } from './organizations/organizations.module'
 import { AccountsModule } from './accounts/accounts.module'
+import { DoorsModule } from './doors/doors.module'
 
 // entities
 import {
@@ -16,8 +20,9 @@ import {
 } from './users/user.entity'
 import { ItemSchema as Item } from './items/item.entity'
 import { AccountSchema as Account } from './accounts/account.entity'
-import Organization from './organizations/organization.entity'
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
+import { OrganizationSchema as Organization } from './organizations/organization.entity'
+import { DoorSchema as Door } from './doors/door.entity'
+
 import { AuthMiddleware } from './middleware/auth'
 
 const ormConfig: TypeOrmModuleOptions = {
@@ -27,7 +32,7 @@ const ormConfig: TypeOrmModuleOptions = {
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  entities: [User, OrganizationUser, Item, Organization, Account],
+  entities: [User, OrganizationUser, Item, Organization, Account, Door],
   synchronize: true,
   namingStrategy: new SnakeNamingStrategy()
 }
@@ -41,7 +46,8 @@ const ormConfig: TypeOrmModuleOptions = {
     PlaidModule,
     ItemsModule,
     OrganizationsModule,
-    AccountsModule
+    AccountsModule,
+    DoorsModule
   ],
   controllers: [AppController],
   providers: [AppService]
@@ -56,7 +62,8 @@ export class AppModule implements NestModule {
         '/items/*-token',
         { path: '/items', method: RequestMethod.DELETE },
         '/accounts',
-        '/users'
+        '/users',
+        'organizations'
       )
   }
 }

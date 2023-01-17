@@ -8,3 +8,15 @@ export const auth0Client = new Auth0Client({
     audience: `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/api/v2/`
   }
 })
+
+export const query = (path: string) => ({
+  baseUrl: `http://${process.env.NEXT_PUBLIC_API_HOST}/api/${path}`,
+  prepareHeaders: async (headers) => {
+    const token = await auth0Client.getTokenSilently()
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`)
+    }
+
+    return headers
+  }
+})
