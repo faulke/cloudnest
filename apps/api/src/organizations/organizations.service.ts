@@ -13,8 +13,28 @@ export class OrganizationsService {
     private orgUsersRepo: Repository<OrganizationUser>
   ) {}
 
-  findAll(userId: string): Promise<Organization[]> {
-    return this.orgsRepo.find({ where: { createdById: userId } })
+  // need to test with another user, organization, and org users
+  findAllByUser(userId: string): Promise<Organization[]> {
+    return this.orgsRepo
+      .createQueryBuilder('organizations')
+      .leftJoinAndSelect('organizations.users', 'organization_user')
+      .where('organizations.created_by_id = :userId', { userId })
+      .orWhere('organization_user.user_id = :userId', { userId })
+      .getMany()
+  }
+
+  findOneByUser(userId: string, orgId: string): Promise<Organization> {
+    return this.orgsRepo
+      .createQueryBuilder('organizations')
+      .leftJoinAndSelect('organizations.users', 'organization_user')
+      .where('organizations.created_by_id = :userId', { userId })
+      .orWhere('organization_user.user_id = :userId', { userId })
+      .andWhere('organizations.id = :orgId', { orgId })
+      .getOne()
+  }
+
+  getOrgUsers(orgId: string): Promise<OrganizationUser[]> {
+    return this.orgUsersRepo.find({ where: { organizationId: orgId } })
   }
 
   async create(org: Organization): Promise<Organization> {
