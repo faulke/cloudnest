@@ -32,11 +32,17 @@ export const orgsApi = createApi({
         }
         return [{ type: 'Organizations', id: 'LIST' }]
       }
+    }),
+    getOrgById: builder.query<any, string>({
+      query: (id) => `/${id}`,
+      transformResponse: (response: { data }) => response.data
     })
   })
 })
 
 export const {
   useGetOrgsQuery,
-  useCreateOrgMutation
+  useCreateOrgMutation,
+  useGetOrgByIdQuery,
+  useLazyGetOrgByIdQuery
 } = orgsApi

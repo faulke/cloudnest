@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import { useFormik } from 'formik'
-import { useCreateOrgMutation, useGetOrgsQuery } from '../services/organizations'
+import { useCreateOrgMutation, useGetOrgByIdQuery, useGetOrgsQuery, useLazyGetOrgByIdQuery } from '../services/organizations'
 
 const initialValues = {
   name: ''
@@ -17,6 +17,8 @@ const App: NextPage = () => {
   const router = useRouter()
   const [createOrg] = useCreateOrgMutation()
   const { data: orgs = [] } = useGetOrgsQuery()
+  const [getOrgById, org] = useLazyGetOrgByIdQuery()
+  console.log(org)
 
   const formik = useFormik({
     initialValues,
@@ -49,7 +51,7 @@ const App: NextPage = () => {
         </Box>
         <Box>
           {orgs.map((org) => (
-            <div key={org.id}>{org.name}</div>
+            <div key={org.id} onClick={() => getOrgById(org.id)}>{org.name}</div>
           ))}
         </Box>
       </div>
