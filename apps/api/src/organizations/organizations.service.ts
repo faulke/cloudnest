@@ -2,7 +2,10 @@ import { Organization, OrganizationUser, Role } from '@lib/models'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import ShortUniqueId from 'short-unique-id'
 import OrganizationSchema, { OrganizationUserSchema } from './organization.entity'
+
+const uniqueId = new ShortUniqueId()
 
 @Injectable()
 export class OrganizationsService {
@@ -23,13 +26,13 @@ export class OrganizationsService {
       .getMany()
   }
 
-  findOneByUser(userId: string, orgId: string): Promise<Organization> {
+  findOneByUser(userId: string, uniqueId: string): Promise<Organization> {
     return this.orgsRepo
       .createQueryBuilder('organizations')
       .leftJoinAndSelect('organizations.users', 'organization_user')
       .where('organizations.created_by_id = :userId', { userId })
       .orWhere('organization_user.user_id = :userId', { userId })
-      .andWhere('organizations.id = :orgId', { orgId })
+      .andWhere('organizations.unique_id = :uniqueId', { uniqueId })
       .getOne()
   }
 
@@ -38,7 +41,10 @@ export class OrganizationsService {
   }
 
   async create(org: Organization): Promise<Organization> {
-    const newOrg = await this.orgsRepo.save(org)
+    const newOrg = await this.orgsRepo.save({
+      ...org,
+      uniqueId: uniqueId()
+    })
     const user = await this.orgUsersRepo.save({
       userId: newOrg.createdById,
       role: Role.Admin,

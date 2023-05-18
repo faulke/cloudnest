@@ -23,11 +23,11 @@ export class OrganizationsController {
   }
 
   @Get(':id/users')
-  async getOrgUsers(@Req() request: NestRequest, @Param('id') id: string) {
+  async getOrgUsers(@Req() request: NestRequest, @Param('id') uniqueId: string) {
     // first determine if user is part of org
     // this could be put in a cache and queried by middleware
     // check db for now
-    const org = await this.orgsService.findOneByUser(request.userId, id)
+    const org = await this.orgsService.findOneByUser(request.userId, uniqueId)
 
     if (!org?.id) {
       return {
@@ -35,7 +35,7 @@ export class OrganizationsController {
       }
     }
     return {
-      data: await this.orgsService.getOrgUsers(id)
+      data: await this.orgsService.getOrgUsers(org.id)
     }
   }
 

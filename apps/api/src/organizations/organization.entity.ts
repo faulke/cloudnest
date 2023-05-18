@@ -16,6 +16,10 @@ export const OrganizationSchema = new EntitySchema<Organization>({
     createdById: {
       type: String,
       select: false
+    },
+    uniqueId: {
+      type: String,
+      unique: true
     }
   },
   relations: {

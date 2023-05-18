@@ -51,7 +51,7 @@ const App: NextPage = () => {
         </Box>
         <Box>
           {orgs.map((org) => (
-            <div key={org.id} onClick={() => getOrgById(org.id)}>{org.name}</div>
+            <div key={org.id} onClick={() => getOrgById(org.uniqueId)}>{org.name}</div>
           ))}
         </Box>
       </div>

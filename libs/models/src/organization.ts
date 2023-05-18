@@ -8,6 +8,7 @@ export interface Organization {
   doors?: Door[]
   createdBy?: User
   createdById?: string
+  uniqueId?: string
 }
 
 export enum Role {

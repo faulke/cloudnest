@@ -1,5 +1,4 @@
-import { Organization } from './organization'
-import { OrganizationUser } from './user'
+import { Organization, OrganizationUser } from './organization'
 
 export interface Door {
   id?: string
